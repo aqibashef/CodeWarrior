@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.google.android.gms.plus.PlusShare;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -51,7 +52,7 @@ public class LoginFragment extends Fragment implements OnClickListener {
 
 	private EditText editTextEmail;
 	private EditText editTextPassword;
-	private Button buttonLogin;
+	private ButtonRectangle buttonLogin;
 	private LinearLayout registerLayout;
 
 	private LoginSuccessListener loginSuccessListener;
@@ -107,7 +108,7 @@ public class LoginFragment extends Fragment implements OnClickListener {
 				.findViewById(R.id.registerText);
 		registerLayout.setOnClickListener(this);
 
-		buttonLogin = (Button) rootView.findViewById(R.id.buttonLogin);
+		buttonLogin = (ButtonRectangle) rootView.findViewById(R.id.buttonLogin);
 		buttonLogin.setOnClickListener(this);
 
 		return rootView;

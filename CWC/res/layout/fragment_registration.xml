@@ -92,14 +92,25 @@
             android:inputType="textPassword"
             android:layout_below="@+id/textViewConfirmPasswordReg"
            />
-        <Button
+        <!-- <Button
             android:id="@+id/buttonRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/editTextConfirmPasswordReg"
             android:text="@string/textRegButton"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"/> -->
+        
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/buttonRegister"
+            android:layout_width="120dp"
+            android:layout_height="55dp"
+            android:background="@color/colorPrimary"
+            android:text="@string/textRegButton"
+            android:textSize="18sp"
+            android:layout_below="@+id/editTextConfirmPasswordReg"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
         
         
     </RelativeLayout>

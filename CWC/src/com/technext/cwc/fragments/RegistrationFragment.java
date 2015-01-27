@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.google.gson.Gson;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -36,7 +37,7 @@ public class RegistrationFragment extends Fragment implements OnClickListener{
 	EditText editTextEmail;
 	EditText editTextPassword;
 	EditText editTextConfirmPassword;
-	Button buttonRegister;
+	ButtonRectangle buttonRegister;
 	
 	private RegistrationCompleteListener registrationCompleteListener;
 	private SplashProgressDialog progress;
@@ -72,7 +73,7 @@ public class RegistrationFragment extends Fragment implements OnClickListener{
 		editTextEmail = (EditText) rootView.findViewById(R.id.editTextEmailReg);
 		editTextPassword = (EditText) rootView.findViewById(R.id.editTextPasswordReg);
 		editTextConfirmPassword = (EditText) rootView.findViewById(R.id.editTextConfirmPasswordReg);
-		buttonRegister = (Button) rootView.findViewById(R.id.buttonRegister);
+		buttonRegister = (ButtonRectangle) rootView.findViewById(R.id.buttonRegister);
 		
 		buttonRegister.setOnClickListener(this);
 		
