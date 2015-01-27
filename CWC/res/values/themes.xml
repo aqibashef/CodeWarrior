@@ -26,7 +26,7 @@
         <item name="android:buttonStyle">@style/ButtonStyle</item>
     </style>
     
-    <style name="theme_toolbar" parent="AppTheme.Base">
+    <style name="theme_toolbar" parent="KitkatStatusBar">
 	  <!-- android:textColorPrimary is the  color of the title text
 	       in the Toolbar, in the Theme.AppCompat theme:  -->
 	  <item name="android:textColorPrimary">#fff</item>
@@ -56,5 +56,10 @@
     <style name="ButtonStyle" parent="android:Widget.Button"> 
         <item name="android:background">@drawable/custom_btn</item> 
         <item name="android:textColor">#fff</item>
+    </style>
+    
+    <style name="KitkatStatusBar" parent="MaterialNavigationDrawerTheme.Light.DarkActionBar.TranslucentKitKatStatusBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
 </resources>

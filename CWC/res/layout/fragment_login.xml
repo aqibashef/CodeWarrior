@@ -46,7 +46,7 @@
             android:inputType="textPassword"
             android:layout_below="@+id/textViewPassword"/>
         
-         <Button
+         <!-- <Button
             android:id="@+id/buttonLogin"
             android:layout_width="100dp"
             android:layout_height="55dp"
@@ -55,7 +55,18 @@
             android:layout_below="@+id/editTextPassword"
             android:text="@string/textLogin"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"/> -->
+         
+         <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/buttonLogin"
+            android:layout_width="100dp"
+            android:layout_height="55dp"
+            android:background="@color/colorPrimary"
+            android:text="@string/textLogin"
+            android:textSize="18sp"
+            android:layout_below="@+id/editTextPassword"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
         
          <LinearLayout 
              android:id="@+id/registerText"

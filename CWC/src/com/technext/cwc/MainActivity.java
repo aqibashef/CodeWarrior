@@ -1,64 +1,42 @@
 package com.technext.cwc;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
+import it.neokree.materialnavigationdrawer.elements.MaterialAccount;
+import it.neokree.materialnavigationdrawer.elements.MaterialSection;
+import it.neokree.materialnavigationdrawer.elements.listeners.MaterialSectionListener;
 
-import android.app.Activity;
+import java.io.File;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentSender.SendIntentException;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
-
-
-
-
-
-import com.github.gorbin.asne.core.SocialNetwork;
-import com.github.gorbin.asne.core.SocialNetworkManager;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.plus.Plus;
-
-
-
-
-import com.technext.cwc.R;
 import com.technext.cwc.fragments.LoginFragment;
-import com.technext.cwc.fragments.ProfileFragment;
-import com.technext.cwc.fragments.RegistrationFragment;
-import com.technext.cwc.fragments.ShareContentFragment;
-import com.technext.cwc.fragments.SocialNetworkChooserFragment;
 import com.technext.cwc.fragments.LoginFragment.LoginSuccessListener;
 import com.technext.cwc.fragments.LoginFragment.RegistrationClickListener;
+import com.technext.cwc.fragments.RegistrationFragment;
 import com.technext.cwc.fragments.RegistrationFragment.RegistrationCompleteListener;
+import com.technext.cwc.fragments.SocialNetworkChooserFragment;
 import com.technext.cwc.http.Client;
 import com.technext.cwc.model.User;
 import com.utils.ImageCache.ImageCacheParams;
 import com.utils.ImageFetcher;
 import com.utils.ImageFetcher.Callback;
 
-public class MainActivity extends ActionBarActivity implements
-		NavigationDrawerFragment.NavigationDrawerCallbacks, LoginSuccessListener, RegistrationCompleteListener, Callback,
+public class MainActivity extends MaterialNavigationDrawer implements
+//		NavigationDrawerFragment.NavigationDrawerCallbacks, 
+		LoginSuccessListener, RegistrationCompleteListener, Callback,
 	      ConnectionCallbacks, OnConnectionFailedListener, RegistrationClickListener{
 
 	 private static final String IMAGE_CACHE_DIR = "cwc_tassignment1";
@@ -96,18 +74,18 @@ public class MainActivity extends ActionBarActivity implements
 	 * Fragment managing the behaviors, interactions and presentation of the
 	 * navigation drawer.
 	 */
-	private NavigationDrawerFragment mNavigationDrawerFragment;
-	
-	private ArrayList<String> drawerItems_login = new ArrayList<String>();
-	private ArrayList<String> drawerItems_logout = new ArrayList<String>();
+//	private NavigationDrawerFragment mNavigationDrawerFragment;
+//	
+//	private ArrayList<String> drawerItems_login = new ArrayList<String>();
+//	private ArrayList<String> drawerItems_logout = new ArrayList<String>();
 
 	/**
 	 * Used to store the last screen title. For use in
 	 * {@link #restoreActionBar()}.
 	 */
-	private CharSequence mTitle;
+//	private CharSequence mTitle;
 
-	@Override
+	/*@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
@@ -146,13 +124,51 @@ public class MainActivity extends ActionBarActivity implements
 			mNavigationDrawerFragment.changeDataset(drawerItems_login);
 		}
 		
-		/*  mGoogleApiClient = new GoogleApiClient.Builder(this)
+		  mGoogleApiClient = new GoogleApiClient.Builder(this)
 	        .addConnectionCallbacks(MainActivity.this)
 	        .addOnConnectionFailedListener(this)
 	        .addApi(Plus.API)
 	        .addScope(Plus.SCOPE_PLUS_LOGIN)
-	        .build();*/
+	        .build();
 		
+	}*/
+	
+	@Override
+	public void init(Bundle savedInstanceState) {
+		MaterialAccount account = new MaterialAccount(this.getResources(),"NeoKree","neokree@gmail.com", R.drawable.photo2, R.drawable.bamboo);
+        this.addAccount(account);
+		
+//		setDrawerHeaderImage(R.drawable.profile_bg);
+//        setUsername("My App Name");
+//        setUserEmail("My version build");
+//        setFirstAccountPhoto(getResources().getDrawable(R.drawable.photo));
+
+        // create sections
+        this.addSection(newSection("Login", LoginFragment.newInstance(1)).setSectionColor(Color.parseColor("#009688")));
+        this.addSection(newSection("Registaration",RegistrationFragment.newInstance(2)).setSectionColor(Color.parseColor("#009688")));
+        this.addSection(newSection("Share",R.drawable.camera,SocialNetworkChooserFragment.newInstance(3)).setSectionColor(Color.parseColor("#009688")));
+        
+        final DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        screenHeight = displayMetrics.heightPixels;
+        screenWidth = displayMetrics.widthPixels;
+		
+		initImageLoader(screenHeight,screenWidth);
+		context = this;
+		
+		// add account sections
+        this.addAccountSection(newSection("Account settings",R.drawable.ic_settings_black_24dp,new MaterialSectionListener() {
+            @Override
+            public void onClick(MaterialSection section) {
+                Toast.makeText(MainActivity.this,"Account settings clicked",Toast.LENGTH_SHORT).show();
+
+                // for default section is selected when you click on it
+//                section.unSelect(); // so deselect the section if you want
+            }
+        }));
+
+        // create bottom section
+//        this.addBottomSection(newSection("Bottom Section",R.drawable.ic_settings_black_24dp,new Intent(this,Settings.class)));
 	}
 	
 	 @Override
@@ -189,7 +205,7 @@ public class MainActivity extends ActionBarActivity implements
 	     imageLoader.closeCache();
 	 }
 
-	@Override
+	/*@Override
 	public void onNavigationDrawerItemSelected(int position) {
 		// update the main content by replacing fragments
 		FragmentManager fragmentManager = getSupportFragmentManager();
@@ -197,54 +213,54 @@ public class MainActivity extends ActionBarActivity implements
 				.beginTransaction()
 				.replace(R.id.container,
 						chooseFragment(position + 1)).commit();
-	}
+	}*/
 
 	public void onSectionAttached(int number) {
 		
-		if(Client.getUserFromSession(getApplicationContext()) == null){
-			switch (number) {
-				case 1:
-					mTitle = getString(R.string.title_login);
-					break;
-				case 2:
-					mTitle = getString(R.string.title_registration);
-					break;
-				case 3:
-					mTitle = getString(R.string.title_share);
-					break;
-				}
-		}else if(Client.getUserFromSession(getApplicationContext()) != null){
-			switch (number) {
-				case 1:
-					mTitle = getString(R.string.title_profile);
-					break;
-				case 2:
-					mTitle = getString(R.string.title_logout);
-					break;
-				case 3:
-					mTitle = getString(R.string.title_share);
-					break;
-				}
-		}
+//		if(Client.getUserFromSession(getApplicationContext()) == null){
+//			switch (number) {
+//				case 1:
+//					mTitle = getString(R.string.title_login);
+//					break;
+//				case 2:
+//					mTitle = getString(R.string.title_registration);
+//					break;
+//				case 3:
+//					mTitle = getString(R.string.title_share);
+//					break;
+//				}
+//		}else if(Client.getUserFromSession(getApplicationContext()) != null){
+//			switch (number) {
+//				case 1:
+//					mTitle = getString(R.string.title_profile);
+//					break;
+//				case 2:
+//					mTitle = getString(R.string.title_logout);
+//					break;
+//				case 3:
+//					mTitle = getString(R.string.title_share);
+//					break;
+//				}
+//		}
 	}
 
-	public void restoreActionBar() {
-		ActionBar actionBar = getSupportActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-		actionBar.setDisplayShowTitleEnabled(true);
-		actionBar.setTitle(mTitle);
-	}
+//	public void restoreActionBar() {
+//		ActionBar actionBar = getSupportActionBar();
+//		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+//		actionBar.setDisplayShowTitleEnabled(true);
+//		actionBar.setTitle(mTitle);
+//	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		if (!mNavigationDrawerFragment.isDrawerOpen()) {
-			// Only show items in the action bar relevant to this screen
-			// if the drawer is not showing. Otherwise, let the drawer
-			// decide what to show in the action bar.
-			getMenuInflater().inflate(R.menu.main, menu);
-			restoreActionBar();
-			return true;
-		}
+//		if (!mNavigationDrawerFragment.isDrawerOpen()) {
+//			// Only show items in the action bar relevant to this screen
+//			// if the drawer is not showing. Otherwise, let the drawer
+//			// decide what to show in the action bar.
+//			getMenuInflater().inflate(R.menu.main, menu);
+//			restoreActionBar();
+//			return true;
+//		}
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -257,107 +273,107 @@ public class MainActivity extends ActionBarActivity implements
 		
 		if(id == R.id.action_logout){
 			if(Client.getUserFromSession(getApplicationContext()) != null){
-				logout();
+//				logout();
 			}
 		}
 		return super.onOptionsItemSelected(item);
 	}
 	
-	private Fragment fragment = null;
+//	private Fragment fragment = null;
 	
-	private Fragment chooseFragment(int position){
-//		switch (position) {
-//		case 1:
-//			fragment = LoginFragment.newInstance(position);
-//			break;
-//
-//		case 2:
-//			fragment = RegistrationFragment.newInstance(position);
-//			break;
-//
-//		case 3:
-//			fragment = ProfileFragment.newInstance(position);
-//			break;
-//			
-//		case 4:
-//			fragment = SocialNetworkChooserFragment.newInstance(position);
-//			break;
-//			
-//		default:
-//			fragment = PlaceholderFragment.newInstance(position);
-//			break;
+//	private Fragment chooseFragment(int position){
+////		switch (position) {
+////		case 1:
+////			fragment = LoginFragment.newInstance(position);
+////			break;
+////
+////		case 2:
+////			fragment = RegistrationFragment.newInstance(position);
+////			break;
+////
+////		case 3:
+////			fragment = ProfileFragment.newInstance(position);
+////			break;
+////			
+////		case 4:
+////			fragment = SocialNetworkChooserFragment.newInstance(position);
+////			break;
+////			
+////		default:
+////			fragment = PlaceholderFragment.newInstance(position);
+////			break;
+////		}
+//		
+//		if(Client.getUserFromSession(getApplicationContext()) == null){
+//			switch (position) {
+//				case 1:
+//					fragment = LoginFragment.newInstance(position);
+//					break;
+//				case 2:
+//					fragment = RegistrationFragment.newInstance(position);
+//					break;
+//				case 3:
+//					fragment = SocialNetworkChooserFragment.newInstance(position);
+//					break;
+//				}
+//		}else if(Client.getUserFromSession(getApplicationContext()) != null){
+//			switch (position) {
+//				case 1:
+//					fragment = ProfileFragment.newInstance(position);
+//					break;
+//				case 2:
+//					logout();
+//					break;
+//				case 3:
+//					fragment = SocialNetworkChooserFragment.newInstance(position);
+//					break;
+//				}
 //		}
-		
-		if(Client.getUserFromSession(getApplicationContext()) == null){
-			switch (position) {
-				case 1:
-					fragment = LoginFragment.newInstance(position);
-					break;
-				case 2:
-					fragment = RegistrationFragment.newInstance(position);
-					break;
-				case 3:
-					fragment = SocialNetworkChooserFragment.newInstance(position);
-					break;
-				}
-		}else if(Client.getUserFromSession(getApplicationContext()) != null){
-			switch (position) {
-				case 1:
-					fragment = ProfileFragment.newInstance(position);
-					break;
-				case 2:
-					logout();
-					break;
-				case 3:
-					fragment = SocialNetworkChooserFragment.newInstance(position);
-					break;
-				}
-		}
-		
-		return fragment;
-	}
+//		
+//		return fragment;
+//	}
 
-	private void logout() {
-		if(fragment instanceof SocialNetworkChooserFragment){
-			SocialNetworkManager mSocialNetworkManager = ((SocialNetworkChooserFragment) fragment).getSocialNetworkManager();
-			if(mSocialNetworkManager != null && !mSocialNetworkManager.getInitializedSocialNetworks().isEmpty()) {
-                List<SocialNetwork> socialNetworks = mSocialNetworkManager.getInitializedSocialNetworks();
-                for (SocialNetwork socialNetwork : socialNetworks) {
-                	if(socialNetwork.isConnected()){
-	                	socialNetwork.cancelAll();
-	                    socialNetwork.logout();
-                	}
-                }
-            }
-		}
-		
-		if(fragment instanceof ShareContentFragment){
-			SocialNetwork socialNetwork = ((ShareContentFragment) fragment).getSocialNetwork();
-			if(socialNetwork != null && socialNetwork.isConnected()){
-            	socialNetwork.cancelAll();
-                socialNetwork.logout();
-        	}
-		}
-		
-		Client.removeSession(this);
-		Client.setUser(null);
-		
-		mNavigationDrawerFragment.changeDataset(drawerItems_logout);
-		redirect(1);
-	}
+//	private void logout() {
+//		if(fragment instanceof SocialNetworkChooserFragment){
+//			SocialNetworkManager mSocialNetworkManager = ((SocialNetworkChooserFragment) fragment).getSocialNetworkManager();
+//			if(mSocialNetworkManager != null && !mSocialNetworkManager.getInitializedSocialNetworks().isEmpty()) {
+//                List<SocialNetwork> socialNetworks = mSocialNetworkManager.getInitializedSocialNetworks();
+//                for (SocialNetwork socialNetwork : socialNetworks) {
+//                	if(socialNetwork.isConnected()){
+//	                	socialNetwork.cancelAll();
+//	                    socialNetwork.logout();
+//                	}
+//                }
+//            }
+//		}
+//		
+//		if(fragment instanceof ShareContentFragment){
+//			SocialNetwork socialNetwork = ((ShareContentFragment) fragment).getSocialNetwork();
+//			if(socialNetwork != null && socialNetwork.isConnected()){
+//            	socialNetwork.cancelAll();
+//                socialNetwork.logout();
+//        	}
+//		}
+//		
+//		Client.removeSession(this);
+//		Client.setUser(null);
+//		
+//		mNavigationDrawerFragment.changeDataset(drawerItems_logout);
+//		redirect(1);
+//	}
 
 	@Override
 	public void onloginComplete(User user) {
 		//Toast.makeText(getApplicationContext(), "In Activity email--> "+user.getEmail(), Toast.LENGTH_SHORT).show();
-		mNavigationDrawerFragment.changeDataset(drawerItems_login);
-		redirect(1);
+//		mNavigationDrawerFragment.changeDataset(drawerItems_login);
+//		redirect(1);
 	}
 
 	@Override
 	public void onRegistrationComplete(User user) {
 		//Toast.makeText(getApplicationContext(), "In Activity email--> "+user.getEmail(), Toast.LENGTH_SHORT).show();
-		mNavigationDrawerFragment.changeDataset(drawerItems_login);
-		redirect(1);
+//		mNavigationDrawerFragment.changeDataset(drawerItems_login);
+//		redirect(1);
 	}
 	
 	private void initImageLoader(int screenHeight, int screenWidth){
@@ -439,18 +455,18 @@ public class MainActivity extends ActionBarActivity implements
         pd.dismiss();
     }
 	
-	private void redirect(int position){
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		fragmentManager
-				.beginTransaction()
-				.replace(R.id.container,
-						chooseFragment(position)).commit();
-		onSectionAttached(position);
-	}
+//	private void redirect(int position){
+//		FragmentManager fragmentManager = getSupportFragmentManager();
+//		fragmentManager
+//				.beginTransaction()
+//				.replace(R.id.container,
+//						chooseFragment(position)).commit();
+//		onSectionAttached(position);
+//	}
 
 	@Override
 	public void onRegisterClicked() {
-		redirect(2);
+//		redirect(2);
 		
 	}
 }
