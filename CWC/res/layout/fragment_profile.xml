@@ -1,0 +1,205 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res/com.technext.cwc"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.technext.cwc.fragments.ProfileFragment" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutProfileImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:paddingBottom="15dp" >
+
+            <ImageView
+                android:id="@+id/imageViewProfileBg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/profile_bg" />
+
+            <com.displayer.CircleImageView
+                android:id="@+id/imageViewProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:scaleType="centerInside"
+                app:stroke_color="#EDEDED"
+                app:stroke_width="5" 
+                android:layout_marginTop="15dp"
+                />
+
+            <ImageView
+                android:id="@+id/imageViewUploadPhoto"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true" 
+                android:background="@drawable/camera_button_bg"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"/>
+            
+              <TextView
+                android:id="@+id/labelHeadingName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:textColor="#ffffff"
+          android:layout_centerHorizontal="true"
+                android:layout_below="@+id/imageViewProfile"
+                android:layout_marginTop="10dp"
+                 android:gravity="center_horizontal"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutProfileInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/relativeLayoutProfileImage"
+            android:padding="30dp" 
+            >
+
+            <TextView
+                android:id="@+id/labelFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/textFirstName" />
+
+            <EditText
+                android:id="@+id/editTextInfoFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/labelFirstName"
+                android:paddingLeft="10dp"
+                android:textColor="#797979"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/labelLastName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextInfoFirstName"
+                android:text="@string/textLastName" />
+
+            <EditText
+                android:id="@+id/editTextInfoLasttName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/labelLastName"
+                android:paddingLeft="10dp"
+                android:textColor="#797979"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/labelEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextInfoLasttName"
+                android:text="@string/textEmail" />
+
+            <EditText
+                android:id="@+id/editTextInfoEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/labelEmail"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="10dp"
+                android:textColor="#797979"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/labelPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextInfoEmail"
+                android:text="@string/textPassword" />
+
+            <EditText
+                android:id="@+id/editTextInfoPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/labelPassword"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp"
+                android:textColor="#797979"
+                android:textSize="12sp" 
+                android:hint="@string/hintCurrentPassword"/>
+
+            <TextView
+                android:id="@+id/labelNewPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextInfoPassword"
+                android:text="@string/textNewPassword" />
+
+            <EditText
+                android:id="@+id/editTextInfoNewPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/labelNewPassword"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp"
+                android:textColor="#797979"
+                android:textSize="12sp" 
+                 android:hint="@string/hintNewPassword"/>
+           
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/buttonEdit"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_above="@+id/relativeLayoutProfileInfo"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/button_edit_xm" />
+         <Button
+                android:id="@+id/buttonSave"
+                   android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_above="@+id/relativeLayoutProfileInfo"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/save_button_bg" 
+            android:visibility="gone"/>
+         
+          <android.support.v7.widget.CardView
+            android:id="@+id/cardview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:elevation="100dp"
+            card_view:cardBackgroundColor="#FFFFFF"
+            card_view:cardCornerRadius="0dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:clickable="true"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_below="@+id/relativeLayoutProfileInfo"
+            >
+ 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="this is card view. this contain string lorem ipsum this is card view. this card view this is card view this card view ths is card view"
+                />
+        </android.support.v7.widget.CardView>
+         
+    </RelativeLayout>
+      
+
+</ScrollView>
