@@ -26,8 +26,7 @@ $RECYCLE.BIN/
 .LSOverride
 
 # Icon must end with two \r
-Icon
-
+Icon
 # Thumbnails
 ._*
 
@@ -89,3 +88,6 @@ TAssignment1/gen/
 TAssignment1/bin/
 android-ui/gen/
 android-ui/bin/
+Facebook-SDK/bin/
+Facebook-SDK/gen/
+*.properties
