@@ -91,3 +91,8 @@ android-ui/bin/
 Facebook-SDK/bin/
 Facebook-SDK/gen/
 *.properties
+CWC/bin/
+CWC/gen/
+Volley/bin/
+Volley/gen/
+Facebook-SDK/bin/jarlist.cache
