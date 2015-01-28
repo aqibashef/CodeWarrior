@@ -88,14 +88,13 @@ TAssignment1/gen/
 TAssignment1/bin/
 android-ui/gen/
 android-ui/bin/
-Facebook-SDK/bin/*
-Facebook-SDK/gen/*
+FacebookSDK/bin/*
+FacebookSDK/gen/*
 *.properties
 CWC/bin/
 CWC/gen/
 Volley/bin/
 Volley/gen/
-Facebook-SDK/bin/jarlist.cache
 HorizontalVariableListView/bin/
 HorizontalVariableListViewDemo/bin/
 SuperListviewLibrery/bin/
