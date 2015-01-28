@@ -88,8 +88,8 @@ TAssignment1/gen/
 TAssignment1/bin/
 android-ui/gen/
 android-ui/bin/
-Facebook-SDK/bin/
-Facebook-SDK/gen/
+Facebook-SDK/bin/*
+Facebook-SDK/gen/*
 *.properties
 CWC/bin/
 CWC/gen/
