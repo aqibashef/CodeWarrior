@@ -44,6 +44,7 @@ import com.technext.cwc.dialog.SplashProgressDialog;
 import com.technext.cwc.http.Client;
 import com.technext.cwc.model.ErrorResponse;
 import com.technext.cwc.model.User;
+import com.technext.cwc.utils.URLUtils;
 
 @SuppressLint("NewApi")
 public class ProfileFragment extends Fragment implements OnClickListener {
@@ -281,18 +282,18 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 						Toast.LENGTH_LONG).show();
 			} else {
 				RequestParams params = new RequestParams();
-				params.put(Client.PARAM_USER_ID, Client.getUser().getId()
+				params.put(URLUtils.PARAM_USER_ID, Client.getUser().getId()
 						.toString());
-				params.put(Client.PARAM_SESSION_TOKEN, Client.getUser()
+				params.put(URLUtils.PARAM_SESSION_TOKEN, Client.getUser()
 						.getSession_token());
-				params.put(Client.PARAM_FIRSTNAME, firstname);
-				params.put(Client.PARAM_LASTNAME, lastname);
+				params.put(URLUtils.PARAM_FIRSTNAME, firstname);
+				params.put(URLUtils.PARAM_LASTNAME, lastname);
 				if (password != null && newPassword != null) {
-					params.put(Client.PARAM_PASSWORD, password);
-					params.put(Client.PARAM_NEW_PASSWORD, newPassword);
+					params.put(URLUtils.PARAM_PASSWORD, password);
+					params.put(URLUtils.PARAM_NEW_PASSWORD, newPassword);
 				}
 
-				Client.post(getActivity(), Client.URL_PROFILE_EDIT, params,
+				Client.post(getActivity(), URLUtils.URL_PROFILE_EDIT, params,
 						profileEditResponseHandler);
 
 			}
@@ -328,7 +329,7 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 					} catch (FileNotFoundException e) { 												// e.printStackTrace(); 
 						
 					}
-					Client.post(getActivity(), Client.URL_UPLOAD_PRO_PIC,
+					Client.post(getActivity(), URLUtils.URL_UPLOAD_PRO_PIC,
 							params, uploadImageResponseHandler);
 
 				}

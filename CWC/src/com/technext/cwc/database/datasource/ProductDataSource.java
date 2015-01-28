@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.technext.cwc.database.MySQLiteHelper;
 import com.technext.cwc.database.entity.ProductEntity;
+import com.technext.cwc.model.Category;
+import com.technext.cwc.model.Location;
 import com.technext.cwc.model.Product;
 
 import android.content.ContentValues;
@@ -79,10 +81,15 @@ public class ProductDataSource {
 				.getColumnIndex(ProductEntity.COLUMN_TITLE)));
 		product.setDescription(cursor.getString(cursor
 				.getColumnIndex(ProductEntity.COLUMN_DESCRIPTION)));
-		product.setCategory(cursor.getString(cursor
+		Category category = new Category();
+		category.setName(cursor.getString(cursor
 				.getColumnIndex(ProductEntity.COLUMN_CATEORY)));
-		product.setLocation(cursor.getString(cursor
+		product.setCategory(category);
+		
+		Location location = new Location();
+		location.setName(cursor.getString(cursor
 				.getColumnIndex(ProductEntity.COLUMN_LOCATION)));
+		product.setLocation(location);
 		return product;
 	}
 

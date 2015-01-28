@@ -24,6 +24,7 @@ import com.technext.cwc.dialog.SplashProgressDialog;
 import com.technext.cwc.http.Client;
 import com.technext.cwc.model.User;
 import com.technext.cwc.utils.CommonUtils;
+import com.technext.cwc.utils.URLUtils;
 
 public class RegistrationFragment extends Fragment implements OnClickListener{
 	/**
@@ -127,13 +128,13 @@ public class RegistrationFragment extends Fragment implements OnClickListener{
 				Toast.makeText(getActivity(), "Password doesn't match", Toast.LENGTH_LONG).show();
 			}else{
 				RequestParams params = new RequestParams();
-				params.put(Client.PARAM_FIRSTNAME, firstname);
-				params.put(Client.PARAM_LASTNAME, lastname);
-				params.put(Client.PARAM_EMAIL,email);
-				params.put(Client.PARAM_PASSWORD,password);
-				params.put(Client.PARAM_PASSWORD_CONFIRMATION,confirmPassword);
+				params.put(URLUtils.PARAM_FIRSTNAME, firstname);
+				params.put(URLUtils.PARAM_LASTNAME, lastname);
+				params.put(URLUtils.PARAM_EMAIL,email);
+				params.put(URLUtils.PARAM_PASSWORD,password);
+				params.put(URLUtils.PARAM_PASSWORD_CONFIRMATION,confirmPassword);
 				
-				Client.raw_post(Client.URL_REGISTER, params, registrationResponseHandler);
+				Client.raw_post(URLUtils.URL_REGISTER, params, registrationResponseHandler);
 			}
 		}
 		

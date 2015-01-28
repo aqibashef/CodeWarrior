@@ -43,6 +43,7 @@ import com.technext.cwc.listener.VolleyResponseHandler;
 import com.technext.cwc.model.Product;
 import com.technext.cwc.model.User;
 import com.technext.cwc.utils.CommonUtils;
+import com.technext.cwc.utils.URLUtils;
 
 public class LoginFragment extends Fragment implements OnClickListener {
 	/**
@@ -164,13 +165,13 @@ public class LoginFragment extends Fragment implements OnClickListener {
 				 * loginResponseHandler);
 				 */
 				Map<String, String> params = new HashMap<String, String>();
-				params.put(Client.PARAM_EMAIL, email);
-				params.put(Client.PARAM_PASSWORD, password);
+				params.put(URLUtils.PARAM_EMAIL, email);
+				params.put(URLUtils.PARAM_PASSWORD, password);
 				// Client.raw_post(Client.URL_LOGIN, params,
 				// loginResponseHandler);
 				progress = new SplashProgressDialog(getActivity());
 				progress.show();
-				Client.volleyRawPost(Client.URL_LOGIN, params, User.class,
+				Client.volleyRawPost(URLUtils.URL_LOGIN, params, User.class,
 						null, new VolleyResponseHandler<User>() {
 
 							@Override

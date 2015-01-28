@@ -17,22 +17,24 @@ import com.loopj.android.http.RequestParams;
 import com.technext.cwc.app.AppController;
 import com.technext.cwc.listener.VolleyResponseHandler;
 import com.technext.cwc.model.User;
+import com.technext.cwc.utils.URLUtils;
 
 public class Client {
 	// login params
 	public static final String URL_BASE = "http://hellojewel.net/projects/cwc/public/";
 	// authentication
+	/*
 	public static final String URL_LOGIN = "login";
 	public static final String URL_REGISTER = "register";
 
 	// authenticated
 	public static final String URL_PROFILE_EDIT = "/user/edit";
 	public static final String URL_UPLOAD_PRO_PIC = "/user/upload/profilePic";
-
+*/
 	/**
 	 * Param keys
 	 */
-	public static final String PARAM_USER_ID = "user_id";
+	/*public static final String PARAM_USER_ID = "user_id";
 	public static final String PARAM_SESSION_TOKEN = "session_token";
 	public static final String PARAM_EMAIL = "email";
 	public static final String PARAM_PASSWORD = "password";
@@ -40,7 +42,7 @@ public class Client {
 	public static final String PARAM_PASSWORD_CONFIRMATION = "password_confirmation";
 	public static final String PARAM_PROFILE_PIC = "profile_pic";
 	public static final String PARAM_FIRSTNAME = "firstname";
-	public static final String PARAM_LASTNAME = "lastname";
+	public static final String PARAM_LASTNAME = "lastname";*/
 	/**
 	 * Param keys end
 	 */
@@ -67,7 +69,7 @@ public class Client {
 			AsyncHttpResponseHandler responseHandler) {
 		// client.addHeader("User-Agent",
 		// "AppleCoreMedia/1.0.0.9B206 (iPad; U; CPU OS 5_1_1 like Mac OS X; en_us)");
-		client.get(getAbsoluteUrl(url), params, responseHandler);
+		client.get(URLUtils.getAbsoluteUrl(url), params, responseHandler);
 	}
 
 	/**
@@ -79,7 +81,7 @@ public class Client {
 	 */
 	public static void raw_post(String url, RequestParams params,
 			AsyncHttpResponseHandler responseHandler) {
-		client.post(getAbsoluteUrl(url), params, responseHandler);
+		client.post(URLUtils.getAbsoluteUrl(url), params, responseHandler);
 	}
 
 	/**
@@ -94,16 +96,16 @@ public class Client {
 			AsyncHttpResponseHandler responseHandler) {
 		// check session_token expire_time, if expired, referesh it
 		if (isValidSession(context))
-			client.post(getAbsoluteUrl(url), params, responseHandler);
+			client.post(URLUtils.getAbsoluteUrl(url), params, responseHandler);
 		else {
 			Toast.makeText(context, "You are not Logged in", Toast.LENGTH_SHORT)
 					.show();
 		}
 	}
 
-	private static String getAbsoluteUrl(String relativeUrl) {
+	/*private static String getAbsoluteUrl(String relativeUrl) {
 		return URL_BASE + relativeUrl;
-	}
+	}*/
 
 	public static boolean isValidSession(Context context) {
 		SharedPreferences pref = PreferenceManager
@@ -189,7 +191,7 @@ public class Client {
 			Class<T> clazz, Map<String, String> headers,
 			final VolleyResponseHandler<T> responseHandler) {
 		
-		GsonRequest<T> gsonReq = new GsonRequest<T>(getAbsoluteUrl(url),
+		GsonRequest<T> gsonReq = new GsonRequest<T>(URLUtils.getAbsoluteUrl(url),
 				params, clazz, headers, Method.POST,
 				new Response.Listener<T>() {
 					@Override
