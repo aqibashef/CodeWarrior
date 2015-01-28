@@ -95,11 +95,12 @@ CWC/bin/
 CWC/gen/
 Volley/bin/
 Volley/gen/
+Facebook-SDK/bin/jarlist.cache
 HorizontalVariableListView/bin/
-HorizontalVariableListView/gen/
 HorizontalVariableListViewDemo/bin/
+SuperListviewLibrery/bin/
+SuperListviewSample/bin/
+HorizontalVariableListView/gen/
 HorizontalVariableListViewDemo/gen/
-SuperListviewLibrery/bin/*
-SuperListviewLibrery/gen/*
-SuperListviewSample/bin/*
-SuperListviewSample/gen/*
+SuperListviewLibrery/gen/
+SuperListviewSample/gen/
