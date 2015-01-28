@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.technext.cwc.fragments.CreateAd;
 import com.technext.cwc.fragments.LoginFragment;
 import com.technext.cwc.fragments.LoginFragment.LoginSuccessListener;
 import com.technext.cwc.fragments.LoginFragment.RegistrationClickListener;
@@ -144,7 +145,8 @@ public class MainActivity extends MaterialNavigationDrawer implements
 //        setFirstAccountPhoto(getResources().getDrawable(R.drawable.photo));
 
         // create sections
-        this.addSection(newSection("Login", LoginFragment.newInstance(1)).setSectionColor(Color.parseColor("#009688")));
+//        this.addSection(newSection("Login", LoginFragment.newInstance(1)).setSectionColor(Color.parseColor("#009688")));CreateAd
+        this.addSection(newSection("Login", new CreateAd()).setSectionColor(Color.parseColor("#009688")));
         this.addSection(newSection("Registaration",RegistrationFragment.newInstance(2)).setSectionColor(Color.parseColor("#009688")));
         this.addSection(newSection("Share",R.drawable.camera,SocialNetworkChooserFragment.newInstance(3)).setSectionColor(Color.parseColor("#009688")));
         
