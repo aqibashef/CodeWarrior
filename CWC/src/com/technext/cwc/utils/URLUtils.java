@@ -11,7 +11,7 @@ public class URLUtils {
 		private static final String URL_BASE = "http://www.mocky.io/v2/";
 		// authentication
 		public static final String URL_LOGIN = "54c7b5291f6a712d121514cc";
-		public static final String URL_REGISTER = "54c7b5291f6a712d121514cc";
+		public static final String URL_REGISTER = "54cbb56c96d6b2c611431f8b";
 
 		// authenticated
 		public static final String URL_PROFILE_EDIT = "54c7b5291f6a712d121514cc";
@@ -42,6 +42,7 @@ public class URLUtils {
 		public static final String PARAM_PROFILE_PIC = "profile_pic";
 		public static final String PARAM_FIRSTNAME = "firstname";
 		public static final String PARAM_LASTNAME = "lastname";
+		public static final String PARAM_MOBILE_NO = "mobile_no";
 		/**
 		 * Param keys end
 		 */

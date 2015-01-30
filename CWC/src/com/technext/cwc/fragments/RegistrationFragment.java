@@ -37,6 +37,7 @@ public class RegistrationFragment extends Fragment implements OnClickListener{
 	EditText editTextLastname;
 	EditText editTextEmail;
 	EditText editTextPassword;
+	EditText editTextMobileNo;
 	EditText editTextConfirmPassword;
 	ButtonRectangle buttonRegister;
 	
@@ -75,6 +76,7 @@ public class RegistrationFragment extends Fragment implements OnClickListener{
 		editTextPassword = (EditText) rootView.findViewById(R.id.editTextPasswordReg);
 		editTextConfirmPassword = (EditText) rootView.findViewById(R.id.editTextConfirmPasswordReg);
 		buttonRegister = (ButtonRectangle) rootView.findViewById(R.id.buttonRegister);
+		editTextMobileNo = (EditText) rootView.findViewById(R.id.editTextMobileNo);
 		
 		buttonRegister.setOnClickListener(this);
 		
@@ -112,6 +114,8 @@ public class RegistrationFragment extends Fragment implements OnClickListener{
 			String email = editTextEmail.getText().toString();
 			String password = editTextPassword.getText().toString();
 			String confirmPassword = editTextConfirmPassword.getText().toString();
+			String mobileNo = editTextMobileNo.getText().toString();
+			
 			if(firstname == null || firstname.equalsIgnoreCase("")){
 				Toast.makeText(getActivity(), "Firstname Required", Toast.LENGTH_LONG).show();
 			}
@@ -126,13 +130,17 @@ public class RegistrationFragment extends Fragment implements OnClickListener{
 				Toast.makeText(getActivity(), "Please Confirm Password", Toast.LENGTH_LONG).show();
 			}else if(!confirmPassword.equals(password)){
 				Toast.makeText(getActivity(), "Password doesn't match", Toast.LENGTH_LONG).show();
-			}else{
+			}else if(mobileNo == null || mobileNo.equalsIgnoreCase("")){
+				Toast.makeText(getActivity(), "Mobile No Required", Toast.LENGTH_LONG).show();
+			}
+			else{
 				RequestParams params = new RequestParams();
 				params.put(URLUtils.PARAM_FIRSTNAME, firstname);
 				params.put(URLUtils.PARAM_LASTNAME, lastname);
 				params.put(URLUtils.PARAM_EMAIL,email);
 				params.put(URLUtils.PARAM_PASSWORD,password);
 				params.put(URLUtils.PARAM_PASSWORD_CONFIRMATION,confirmPassword);
+				params.put(URLUtils.PARAM_MOBILE_NO,mobileNo);
 				
 				Client.raw_post(URLUtils.URL_REGISTER, params, registrationResponseHandler);
 			}

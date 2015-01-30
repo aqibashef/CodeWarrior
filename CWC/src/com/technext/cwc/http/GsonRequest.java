@@ -3,6 +3,8 @@ package com.technext.cwc.http;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
+import android.util.Log;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
@@ -13,10 +15,11 @@ import com.android.volley.Response.Listener;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
 public class GsonRequest<T> extends Request<T> {
-	private final Gson gson = new Gson();
+	private final Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();;
 	private final Class<T> clazz;
 	private final Map<String, String> headers;
 	private final Listener<T> listener;
@@ -61,6 +64,7 @@ public class GsonRequest<T> extends Request<T> {
 	@Override
 	protected Response<T> parseNetworkResponse(NetworkResponse response) {
 		try {
+			Log.e("response--> ", "--> klk");
 			String json = new String(response.data,
 					HttpHeaderParser.parseCharset(response.headers));
 			return Response.success(gson.fromJson(json, clazz),
