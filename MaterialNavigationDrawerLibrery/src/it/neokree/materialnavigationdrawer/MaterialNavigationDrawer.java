@@ -1116,7 +1116,7 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
             return false;
     }
 
-    private void setSectionsTouch(boolean isTouchable) {
+    public void setSectionsTouch(boolean isTouchable) {
         for(MaterialSection section : sectionList) {
             section.setTouchable(isTouchable);
         }
@@ -1194,6 +1194,49 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
             drawerTouchLocked = true;
             setSectionsTouch(!drawerTouchLocked);
         }
+    }
+    
+    public void onClickCustom(MaterialSection section) {
+    	switch (section.getTarget()) {
+	        case MaterialSection.TARGET_FRAGMENT:
+	            setFragment((Fragment) section.getTargetFragment(), section.getTitle(), (Fragment) currentSection.getTargetFragment());
+	            changeToolbarColor(section);
+	
+	            // add to the childStack the Fragment and title
+	            childFragmentStack.add((Fragment)section.getTargetFragment());
+	            childTitleStack.add(section.getTitle());
+	            isCurrentFragmentChild = false;
+	            pulsante.setDrawerIndicatorEnabled(true);
+	            break;
+	        case MaterialSection.TARGET_ACTIVITY:
+	            this.startActivity(section.getTargetIntent());
+	            if (!deviceSupportMultiPane())
+	                layout.closeDrawer(drawer);
+	            break;
+	        // TARGET_LISTENER viene gestito internamente
+	        case MaterialSection.TARGET_LISTENER:
+	            if (!deviceSupportMultiPane())
+	                layout.closeDrawer(drawer);
+	        default:
+	            break;
+	    }
+	    currentSection = section;
+	
+	    int position = section.getPosition();
+	
+	    for (MaterialSection mySection : sectionList) {
+	        if (position != mySection.getPosition())
+	            mySection.unSelect();
+	    }
+	    for (MaterialSection mySection : bottomSectionList) {
+	        if (position != mySection.getPosition())
+	            mySection.unSelect();
+	    }
+	
+	    if(!deviceSupportMultiPane()) {
+	        drawerTouchLocked = true;
+	        setSectionsTouch(!drawerTouchLocked);
+	    }
     }
 
     @Override
@@ -1434,6 +1477,34 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
         account.setAccountNumber(accountManager.size());
         accountManager.add(account);
     }
+    
+    public void setCurrentAccount(MaterialAccount account){
+    	currentAccount = account;
+    }
+    
+    public void setCurrentSection(MaterialSection section){
+    	currentSection = section;
+    }
+    
+    public void clearAccounts() {
+        accountManager.clear();
+    }
+    
+    public void clearSectionsView() {
+        sections.removeAllViews();
+    }
+    
+    public void initLists(){
+    	sectionList.clear();
+        bottomSectionList.clear();
+        accountManager.clear();
+        accountSectionList.clear();
+        subheaderList.clear();
+        elementsList.clear();
+        childFragmentStack.clear();
+        childTitleStack.clear();
+        notifyAccountDataChanged();
+    }
 
     /**
      * Reload Application data from Account Information
@@ -1442,14 +1513,22 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
         switch(accountManager.size()) {
             case 3:
                 this.setThirdAccountPhoto(findAccountNumber(MaterialAccount.THIRD_ACCOUNT).getCircularPhoto());
+                break;
             case 2:
                 this.setSecondAccountPhoto(findAccountNumber(MaterialAccount.SECOND_ACCOUNT).getCircularPhoto());
+                break;
             case 1:
                 this.setFirstAccountPhoto(currentAccount.getCircularPhoto());
                 this.setDrawerHeaderImage(currentAccount.getBackground());
                 this.setUsername(currentAccount.getTitle());
                 this.setUserEmail(currentAccount.getSubTitle());
+                break;
             default:
+            	this.setFirstAccountPhoto(null);
+                this.setDrawerHeaderImage(R.drawable.profile_bg);
+                this.setUsername(null);
+                this.setUserEmail(null);
+                break;
         }
     }
 
