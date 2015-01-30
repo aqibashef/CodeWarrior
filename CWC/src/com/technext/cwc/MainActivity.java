@@ -24,9 +24,11 @@ import com.github.gorbin.asne.core.SocialNetworkManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.technext.cwc.fragments.CreateAdFragment;
 import com.technext.cwc.fragments.LoginFragment;
 import com.technext.cwc.fragments.LoginFragment.LoginSuccessListener;
 import com.technext.cwc.fragments.LoginFragment.RegistrationClickListener;
+import com.technext.cwc.fragments.ProductDetailsFragment;
 import com.technext.cwc.fragments.ProductListFragment;
 import com.technext.cwc.fragments.ProfileFragment;
 import com.technext.cwc.fragments.RegistrationFragment;
@@ -283,6 +285,8 @@ public class MainActivity extends MaterialNavigationDrawer implements
 		this.addSection(sectionProfile);
         this.addSection(newSection(getString(R.string.title_share),SocialNetworkChooserFragment.newInstance(3)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
         this.addSection(newSection("Product List",new ProductListFragment()).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        this.addSection(newSection("Product Details",ProductDetailsFragment.newInstance(4)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        this.addSection(newSection("Create Ad",new CreateAdFragment()).setSectionColor(getResources().getColor(R.color.colorPrimary)));
         this.addBottomSection(newSection("Logout",R.drawable.ic_settings_black_24dp,new MaterialSectionListener() {
 			
 			@Override
@@ -309,6 +313,8 @@ public class MainActivity extends MaterialNavigationDrawer implements
     	this.addSection(sectionLogin);
         this.addSection(newSection(getString(R.string.title_registration),RegistrationFragment.newInstance(2)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
         this.addSection(newSection(getString(R.string.title_share),SocialNetworkChooserFragment.newInstance(3)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        this.addSection(newSection("Product Details",ProductDetailsFragment.newInstance(4)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        this.addSection(newSection("Create Ad",new CreateAdFragment()).setSectionColor(getResources().getColor(R.color.colorPrimary)));
         if(!isOnCreate){
 	        this.setCurrentSection(sectionLogin);
 	        this.onClickCustom(sectionLogin);

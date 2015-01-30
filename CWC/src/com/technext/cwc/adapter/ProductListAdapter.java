@@ -5,24 +5,31 @@ import java.util.List;
 import com.gc.materialdesign.views.LayoutRipple;
 import com.squareup.picasso.Picasso;
 import com.technext.cwc.R;
+import com.technext.cwc.ViewPagerActivity;
 import com.technext.cwc.http.Client;
 import com.technext.cwc.model.Product;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class ProductListAdapter extends BaseAdapter {
+public class ProductListAdapter extends BaseAdapter implements OnClickListener {
 
 	private LayoutInflater mInflater;
 	private Context context;
 	private List<Product> products;
+	public static final String SERVER_ID = "server_id";
 
 	public ProductListAdapter(Context context, List<Product> products) {
 		this.context = context;
@@ -53,6 +60,7 @@ public class ProductListAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 
 		ViewHolder holder = null;
+		Product product = (Product) getItem(position);
 
 		if (convertView == null) {
 			convertView = mInflater.inflate(R.layout.product_list_item, null);
@@ -66,15 +74,12 @@ public class ProductListAdapter extends BaseAdapter {
 			holder.productTime = (TextView) convertView.findViewById(R.id.productTime);
 			holder.productPriceType = (TextView) convertView.findViewById(R.id.productPriceType);
 			holder.productPrice = (TextView) convertView.findViewById(R.id.productPrice);
+			holder.product = product;
 			
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		
-		
-		
-		Product product = (Product) getItem(position);
 		
 		String url = product.getImages().get(0).getServer_url();
 		if(url == null || url.equalsIgnoreCase("")){
@@ -97,6 +102,8 @@ public class ProductListAdapter extends BaseAdapter {
 		holder.productTime.setText("Time");
 		holder.productPriceType.setText(product.getPrice_type());
 		holder.productPrice.setText(product.getPrice().toString()+"/=");
+		
+		convertView.setOnClickListener(ProductListAdapter.this);
 
 		return convertView;
 	}
@@ -118,7 +125,16 @@ public class ProductListAdapter extends BaseAdapter {
 		TextView productTime;
 		TextView productPriceType;
 		TextView productPrice;
+		Product product;
 	
+	}
+
+	@Override
+	public void onClick(View v) {
+		ViewHolder holder = (ViewHolder) v.getTag();
+		Intent intent = new Intent(context, ViewPagerActivity.class);
+		intent.putExtra(SERVER_ID, holder.product.getServer_id());
+		context.startActivity(intent);
 	}
 
 }
