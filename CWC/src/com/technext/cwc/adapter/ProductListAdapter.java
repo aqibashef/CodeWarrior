@@ -96,7 +96,7 @@ public class ProductListAdapter extends BaseAdapter {
 		holder.productLocation.setText(product.getLocation().getName());
 		holder.productTime.setText("Time");
 		holder.productPriceType.setText(product.getPrice_type());
-		holder.productPrice.setText(product.getPrice().toString());
+		holder.productPrice.setText(product.getPrice().toString()+"/=");
 
 		return convertView;
 	}

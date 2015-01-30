@@ -247,8 +247,8 @@ public class SocialNetworkChooserFragment extends Fragment implements SocialNetw
 	public void onAttach(Activity activity) {
 		// TODO Auto-generated method stub
 		super.onAttach(activity);
-		((MainActivity) activity).onSectionAttached(getArguments().getInt(
-				MainActivity.ARG_SECTION_NUMBER));
+		/*((MainActivity) activity).onSectionAttached(getArguments().getInt(
+				MainActivity.ARG_SECTION_NUMBER));*/
 
 	}
     

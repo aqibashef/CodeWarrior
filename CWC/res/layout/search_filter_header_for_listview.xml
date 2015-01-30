@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relativeLayoutProductControl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginBottom="5dp" >
+
+    <EditText 
+        android:id="@+id/search_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:freezesText="true"
+        android:inputType="text"
+	    android:imeActionLabel="Search"
+	    android:imeOptions="actionSearch"
+	    android:background="@drawable/edittext_background"
+	    android:drawableRight="@drawable/ic_action_search_icon_hi"
+        android:hint="type here to search..." />
+    
+    <LinearLayout 
+        android:id="@+id/filter_wrapper1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:layout_below="@+id/search_box">
+    
+	    <Spinner
+	        android:id="@+id/filter_location"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content" 
+	        android:layout_weight="1"/>
+	    
+	    <Spinner
+	        android:id="@+id/filter_category"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="1"/>
+    </LinearLayout>
+    
+	 <com.gc.materialdesign.views.ButtonFlat
+            android:id="@+id/filter_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+	        android:layout_below="@+id/filter_wrapper1"
+	        android:layout_alignParentRight="true"
+            android:textColor="#000"
+            android:text="Price" 
+            materialdesign:rippleSpeed="40.0"/>
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/filter_wrapper1"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/filter_price">
+	    
+        <TextView 
+	        android:id="@+id/sort_spinner_textview"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="Sort: "/>
+        
+	    <Spinner
+	        android:id="@+id/sort_spinner"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"/>
+    </LinearLayout>
+</RelativeLayout>

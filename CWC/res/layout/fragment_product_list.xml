@@ -1,24 +1,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="#fff" >
 
-    <RelativeLayout
-        android:id="@+id/relativeLayoutProductControl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Dummy text" />
-    </RelativeLayout>
+	<include layout="@layout/search_filter_header_for_listview"/>  
+	<View
+	    android:id="@+id/blank_view"
+        android:layout_width="fill_parent"
+        android:layout_height="2dp"
+        android:background="#88CECECE"
+        android:layout_below="@+id/relativeLayoutProductControl" />
 
     <RelativeLayout
         android:id="@+id/relativeLayoutProductList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/relativeLayoutProductControl" >
+        android:layout_below="@+id/blank_view" >
 
         <ListView
             android:id="@+id/productListView"

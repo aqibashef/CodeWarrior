@@ -11,7 +11,6 @@ import java.util.List;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,10 +24,10 @@ import com.github.gorbin.asne.core.SocialNetworkManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.technext.cwc.fragments.CreateAd;
 import com.technext.cwc.fragments.LoginFragment;
 import com.technext.cwc.fragments.LoginFragment.LoginSuccessListener;
 import com.technext.cwc.fragments.LoginFragment.RegistrationClickListener;
+import com.technext.cwc.fragments.ProductListFragment;
 import com.technext.cwc.fragments.ProfileFragment;
 import com.technext.cwc.fragments.RegistrationFragment;
 import com.technext.cwc.fragments.RegistrationFragment.RegistrationCompleteListener;
@@ -36,8 +35,6 @@ import com.technext.cwc.fragments.ShareContentFragment;
 import com.technext.cwc.fragments.SocialNetworkChooserFragment;
 import com.technext.cwc.http.Client;
 import com.technext.cwc.model.User;
-import com.utils.ImageCache.ImageCacheParams;
-import com.utils.ImageFetcher;
 import com.utils.ImageFetcher.Callback;
 
 public class MainActivity extends MaterialNavigationDrawer implements
@@ -63,82 +60,6 @@ public class MainActivity extends MaterialNavigationDrawer implements
 	 public static final String SOCIAL_NETWORK_TAG = "SocialIntegrationMain.SOCIAL_NETWORK_TAG";
 	 public final static String ARG_SECTION_NUMBER = "section_number";
 
-
-	 
-	 /* Request code used to invoke sign in user interactions. */
-	  private static final int RC_SIGN_IN = 0;
-
-	  /* Client used to interact with Google APIs. */
-	 // private GoogleApiClient mGoogleApiClient;
-
-	  /* A flag indicating that a PendingIntent is in progress and prevents
-	   * us from starting further intents.
-	   */
-	  private boolean mIntentInProgress;
-	
-	/**
-	 * Fragment managing the behaviors, interactions and presentation of the
-	 * navigation drawer.
-	 */
-//	private NavigationDrawerFragment mNavigationDrawerFragment;
-//	
-//	private ArrayList<String> drawerItems_login = new ArrayList<String>();
-//	private ArrayList<String> drawerItems_logout = new ArrayList<String>();
-
-	/**
-	 * Used to store the last screen title. For use in
-	 * {@link #restoreActionBar()}.
-	 */
-//	private CharSequence mTitle;
-
-	/*@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		context = this;
-		
-		drawerItems_logout.add(getString(R.string.title_login));
-		drawerItems_logout.add(getString(R.string.title_registration));
-		drawerItems_logout.add(getString(R.string.title_share));
-		
-		drawerItems_login.add(getString(R.string.title_profile));
-		drawerItems_login.add(getString(R.string.title_logout));
-		drawerItems_login.add(getString(R.string.title_share));
-		
-		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-
-		mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager()
-				.findFragmentById(R.id.navigation_drawer);
-		mTitle = getTitle();
-
-		// Set up the drawer.
-		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
-				(DrawerLayout) findViewById(R.id.drawer_layout), toolbar);
-		
-		
-		final DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        screenHeight = displayMetrics.heightPixels;
-        screenWidth = displayMetrics.widthPixels;
-		
-		initImageLoader(screenHeight,screenWidth);
-		if(Client.getUserFromSession(getApplicationContext()) == null){
-			//Toast.makeText(getApplicationContext(), "user logged out", Toast.LENGTH_SHORT).show();
-			mNavigationDrawerFragment.changeDataset(drawerItems_logout);
-		}else{
-			//Toast.makeText(getApplicationContext(), "user logged in"+Client.getUser().getProfile_pic_url(), Toast.LENGTH_SHORT).show();
-			mNavigationDrawerFragment.changeDataset(drawerItems_login);
-		}
-		
-		  mGoogleApiClient = new GoogleApiClient.Builder(this)
-	        .addConnectionCallbacks(MainActivity.this)
-	        .addOnConnectionFailedListener(this)
-	        .addApi(Plus.API)
-	        .addScope(Plus.SCOPE_PLUS_LOGIN)
-	        .build();
-		
-	}*/
-	
 	@Override
 	public void init(Bundle savedInstanceState) {
 		
@@ -148,7 +69,7 @@ public class MainActivity extends MaterialNavigationDrawer implements
 //        setFirstAccountPhoto(getResources().getDrawable(R.drawable.photo));
 
         // create sections
-//        this.addSection(newSection("Login", LoginFragment.newInstance(1)).setSectionColor(Color.parseColor("#009688")));CreateAd
+//        this.addSection(newSection("Login", LoginFragment.newInstance(1)).setSectionColor(Color.parseColor("#009688")));CreateAdFragment
         if(Client.getUserFromSession(getApplicationContext()) == null){
 			//Toast.makeText(getApplicationContext(), "user logged out", Toast.LENGTH_SHORT).show();
         	afterLogout(true);
@@ -205,52 +126,6 @@ public class MainActivity extends MaterialNavigationDrawer implements
 //	     imageLoader.closeCache();
 	 }
 
-	/*@Override
-	public void onNavigationDrawerItemSelected(int position) {
-		// update the main content by replacing fragments
-		FragmentManager fragmentManager = getSupportFragmentManager();
-		fragmentManager
-				.beginTransaction()
-				.replace(R.id.container,
-						chooseFragment(position + 1)).commit();
-	}*/
-
-	public void onSectionAttached(int number) {
-		
-//		if(Client.getUserFromSession(getApplicationContext()) == null){
-//			switch (number) {
-//				case 1:
-//					mTitle = getString(R.string.title_login);
-//					break;
-//				case 2:
-//					mTitle = getString(R.string.title_registration);
-//					break;
-//				case 3:
-//					mTitle = getString(R.string.title_share);
-//					break;
-//				}
-//		}else if(Client.getUserFromSession(getApplicationContext()) != null){
-//			switch (number) {
-//				case 1:
-//					mTitle = getString(R.string.title_profile);
-//					break;
-//				case 2:
-//					mTitle = getString(R.string.title_logout);
-//					break;
-//				case 3:
-//					mTitle = getString(R.string.title_share);
-//					break;
-//				}
-//		}
-	}
-
-//	public void restoreActionBar() {
-//		ActionBar actionBar = getSupportActionBar();
-//		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-//		actionBar.setDisplayShowTitleEnabled(true);
-//		actionBar.setTitle(mTitle);
-//	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 			getMenuInflater().inflate(R.menu.main, menu);
@@ -272,60 +147,6 @@ public class MainActivity extends MaterialNavigationDrawer implements
 		return super.onOptionsItemSelected(item);
 	}
 	
-//	private Fragment fragment = null;
-	
-//	private Fragment chooseFragment(int position){
-////		switch (position) {
-////		case 1:
-////			fragment = LoginFragment.newInstance(position);
-////			break;
-////
-////		case 2:
-////			fragment = RegistrationFragment.newInstance(position);
-////			break;
-////
-////		case 3:
-////			fragment = ProfileFragment.newInstance(position);
-////			break;
-////			
-////		case 4:
-////			fragment = SocialNetworkChooserFragment.newInstance(position);
-////			break;
-////			
-////		default:
-////			fragment = PlaceholderFragment.newInstance(position);
-////			break;
-////		}
-//		
-//		if(Client.getUserFromSession(getApplicationContext()) == null){
-//			switch (position) {
-//				case 1:
-//					fragment = LoginFragment.newInstance(position);
-//					break;
-//				case 2:
-//					fragment = RegistrationFragment.newInstance(position);
-//					break;
-//				case 3:
-//					fragment = SocialNetworkChooserFragment.newInstance(position);
-//					break;
-//				}
-//		}else if(Client.getUserFromSession(getApplicationContext()) != null){
-//			switch (position) {
-//				case 1:
-//					fragment = ProfileFragment.newInstance(position);
-//					break;
-//				case 2:
-//					logout();
-//					break;
-//				case 3:
-//					fragment = SocialNetworkChooserFragment.newInstance(position);
-//					break;
-//				}
-//		}
-//		
-//		return fragment;
-//	}
-
 	private void logout() {
 		Fragment fragment = (Fragment) this.getCurrentSection().getTargetFragment();
 //		this.getf
@@ -371,22 +192,6 @@ public class MainActivity extends MaterialNavigationDrawer implements
 //		redirect(1);
 		afterLogin(false);
 	}
-	
-//	private void initImageLoader(int screenHeight, int screenWidth){
-//		int longest = (screenHeight > screenWidth ? screenHeight : screenHeight) / 2;
-//		 ImageCacheParams cacheParams = new ImageCacheParams(MainActivity.this, IMAGE_CACHE_DIR);
-//		 cacheParams.setMemCacheSizePercent(0.25f); // Set memory cache to 25% of app memory
-//		 imageLoader = new ImageFetcher(MainActivity.this, longest);
-//		 imageLoader.setLoadingImage(R.drawable.empty_photo);
-//		 imageLoader.useLoadingImageForFadein(true);
-//		 imageLoader.addImageCache(MainActivity.this.getSupportFragmentManager(), cacheParams);
-//		 imageLoader.setCallback(MainActivity.this);
-//	}
-
-	
-	
-	
-	
 	
 	@Override
 	  protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -477,6 +282,14 @@ public class MainActivity extends MaterialNavigationDrawer implements
         this.addAccount(account);
 		this.addSection(sectionProfile);
         this.addSection(newSection(getString(R.string.title_share),SocialNetworkChooserFragment.newInstance(3)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        this.addSection(newSection("Product List",new ProductListFragment()).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        this.addBottomSection(newSection("Logout",R.drawable.ic_settings_black_24dp,new MaterialSectionListener() {
+			
+			@Override
+			public void onClick(MaterialSection section) {
+				Toast.makeText(MainActivity.this, "clicked", Toast.LENGTH_LONG).show();
+			}
+		}));
         if(!isOnCreate){
 	        this.setCurrentAccount(account);
 	        this.setCurrentSection(sectionProfile);

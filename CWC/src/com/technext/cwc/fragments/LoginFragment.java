@@ -119,8 +119,8 @@ public class LoginFragment extends Fragment implements OnClickListener {
 	public void onAttach(Activity activity) {
 		// TODO Auto-generated method stub
 		super.onAttach(activity);
-		((MainActivity) activity).onSectionAttached(getArguments().getInt(
-				ARG_SECTION_NUMBER));
+		/*((MainActivity) activity).onSectionAttached(getArguments().getInt(
+				ARG_SECTION_NUMBER));*/
 
 		if (!(activity instanceof LoginSuccessListener)) {
 			throw new IllegalStateException(

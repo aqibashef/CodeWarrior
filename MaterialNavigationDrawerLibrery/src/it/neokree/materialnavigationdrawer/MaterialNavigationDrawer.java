@@ -1492,6 +1492,7 @@ public abstract class MaterialNavigationDrawer<Fragment> extends ActionBarActivi
     
     public void clearSectionsView() {
         sections.removeAllViews();
+        bottomSections.removeAllViews();
     }
     
     public void initLists(){

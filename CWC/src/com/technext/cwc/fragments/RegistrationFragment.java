@@ -86,8 +86,8 @@ public class RegistrationFragment extends Fragment implements OnClickListener{
 		// TODO Auto-generated method stub
 		super.onAttach(activity);
 
-		((MainActivity) activity).onSectionAttached(getArguments().getInt(
-				ARG_SECTION_NUMBER));
+		/*((MainActivity) activity).onSectionAttached(getArguments().getInt(
+				ARG_SECTION_NUMBER));*/
 		
 		if (!(activity instanceof RegistrationCompleteListener)) {
 			throw new IllegalStateException(
