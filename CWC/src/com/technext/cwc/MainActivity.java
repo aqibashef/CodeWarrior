@@ -6,6 +6,7 @@ import it.neokree.materialnavigationdrawer.elements.MaterialSection;
 import it.neokree.materialnavigationdrawer.elements.listeners.MaterialSectionListener;
 
 import java.io.File;
+import java.util.List;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -19,6 +20,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.github.gorbin.asne.core.SocialNetwork;
+import com.github.gorbin.asne.core.SocialNetworkManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
@@ -26,8 +29,10 @@ import com.technext.cwc.fragments.CreateAd;
 import com.technext.cwc.fragments.LoginFragment;
 import com.technext.cwc.fragments.LoginFragment.LoginSuccessListener;
 import com.technext.cwc.fragments.LoginFragment.RegistrationClickListener;
+import com.technext.cwc.fragments.ProfileFragment;
 import com.technext.cwc.fragments.RegistrationFragment;
 import com.technext.cwc.fragments.RegistrationFragment.RegistrationCompleteListener;
+import com.technext.cwc.fragments.ShareContentFragment;
 import com.technext.cwc.fragments.SocialNetworkChooserFragment;
 import com.technext.cwc.http.Client;
 import com.technext.cwc.model.User;
@@ -40,9 +45,9 @@ public class MainActivity extends MaterialNavigationDrawer implements
 		LoginSuccessListener, RegistrationCompleteListener, Callback,
 	      ConnectionCallbacks, OnConnectionFailedListener, RegistrationClickListener{
 
-	 private static final String IMAGE_CACHE_DIR = "cwc_tassignment1";
-	 public static ImageFetcher imageLoader; //use to load image from internet
-
+//	 private static final String IMAGE_CACHE_DIR = "cwc_tassignment1";
+//	 public static ImageFetcher imageLoader; //use to load image from internet
+	 public MaterialSection<Fragment> sectionLogin, sectionProfile;
 	 
 	 
 	 
@@ -136,8 +141,6 @@ public class MainActivity extends MaterialNavigationDrawer implements
 	
 	@Override
 	public void init(Bundle savedInstanceState) {
-		MaterialAccount account = new MaterialAccount(this.getResources(),"NeoKree","neokree@gmail.com", R.drawable.photo2, R.drawable.bamboo);
-        this.addAccount(account);
 		
 //		setDrawerHeaderImage(R.drawable.profile_bg);
 //        setUsername("My App Name");
@@ -146,44 +149,39 @@ public class MainActivity extends MaterialNavigationDrawer implements
 
         // create sections
 //        this.addSection(newSection("Login", LoginFragment.newInstance(1)).setSectionColor(Color.parseColor("#009688")));CreateAd
-        this.addSection(newSection("Login", new CreateAd()).setSectionColor(Color.parseColor("#009688")));
-        this.addSection(newSection("Registaration",RegistrationFragment.newInstance(2)).setSectionColor(Color.parseColor("#009688")));
-        this.addSection(newSection("Share",R.drawable.camera,SocialNetworkChooserFragment.newInstance(3)).setSectionColor(Color.parseColor("#009688")));
+        if(Client.getUserFromSession(getApplicationContext()) == null){
+			//Toast.makeText(getApplicationContext(), "user logged out", Toast.LENGTH_SHORT).show();
+        	afterLogout(true);
+		}else{
+			//Toast.makeText(getApplicationContext(), "user logged in"+Client.getUser().getProfile_pic_url(), Toast.LENGTH_SHORT).show();
+			afterLogin(true);
+		}
         
         final DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         screenHeight = displayMetrics.heightPixels;
         screenWidth = displayMetrics.widthPixels;
 		
-		initImageLoader(screenHeight,screenWidth);
+//		initImageLoader(screenHeight,screenWidth);
 		context = this;
-		
-		// add account sections
-        this.addAccountSection(newSection("Account settings",R.drawable.ic_settings_black_24dp,new MaterialSectionListener() {
-            @Override
-            public void onClick(MaterialSection section) {
-                Toast.makeText(MainActivity.this,"Account settings clicked",Toast.LENGTH_SHORT).show();
-
-                // for default section is selected when you click on it
-//                section.unSelect(); // so deselect the section if you want
-            }
-        }));
 
         // create bottom section
 //        this.addBottomSection(newSection("Bottom Section",R.drawable.ic_settings_black_24dp,new Intent(this,Settings.class)));
 	}
 	
+	
+	
 	 @Override
 	 public void onPause() {
 	     super.onPause();
-	     imageLoader.setPauseWork(false);
-	     imageLoader.setExitTasksEarly(true);
-	     imageLoader.flushCache();
+//	     imageLoader.setPauseWork(false);
+//	     imageLoader.setExitTasksEarly(true);
+//	     imageLoader.flushCache();
 	 }
 	 @Override
 	 public void onResume() {
 	     super.onResume();
-	     imageLoader.setExitTasksEarly(false);
+//	     imageLoader.setExitTasksEarly(false);
 	 }
 	 @Override
 	protected void onStart() {
@@ -204,7 +202,7 @@ public class MainActivity extends MaterialNavigationDrawer implements
 	 @Override
 	 public void onDestroy() {
 	     super.onDestroy();
-	     imageLoader.closeCache();
+//	     imageLoader.closeCache();
 	 }
 
 	/*@Override
@@ -255,15 +253,8 @@ public class MainActivity extends MaterialNavigationDrawer implements
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-//		if (!mNavigationDrawerFragment.isDrawerOpen()) {
-//			// Only show items in the action bar relevant to this screen
-//			// if the drawer is not showing. Otherwise, let the drawer
-//			// decide what to show in the action bar.
-//			getMenuInflater().inflate(R.menu.main, menu);
-//			restoreActionBar();
-//			return true;
-//		}
-		return super.onCreateOptionsMenu(menu);
+			getMenuInflater().inflate(R.menu.main, menu);
+			return true;
 	}
 
 	@Override
@@ -275,7 +266,7 @@ public class MainActivity extends MaterialNavigationDrawer implements
 		
 		if(id == R.id.action_logout){
 			if(Client.getUserFromSession(getApplicationContext()) != null){
-//				logout();
+				logout();
 			}
 		}
 		return super.onOptionsItemSelected(item);
@@ -335,40 +326,42 @@ public class MainActivity extends MaterialNavigationDrawer implements
 //		return fragment;
 //	}
 
-//	private void logout() {
-//		if(fragment instanceof SocialNetworkChooserFragment){
-//			SocialNetworkManager mSocialNetworkManager = ((SocialNetworkChooserFragment) fragment).getSocialNetworkManager();
-//			if(mSocialNetworkManager != null && !mSocialNetworkManager.getInitializedSocialNetworks().isEmpty()) {
-//                List<SocialNetwork> socialNetworks = mSocialNetworkManager.getInitializedSocialNetworks();
-//                for (SocialNetwork socialNetwork : socialNetworks) {
-//                	if(socialNetwork.isConnected()){
-//	                	socialNetwork.cancelAll();
-//	                    socialNetwork.logout();
-//                	}
-//                }
-//            }
-//		}
-//		
-//		if(fragment instanceof ShareContentFragment){
-//			SocialNetwork socialNetwork = ((ShareContentFragment) fragment).getSocialNetwork();
-//			if(socialNetwork != null && socialNetwork.isConnected()){
-//            	socialNetwork.cancelAll();
-//                socialNetwork.logout();
-//        	}
-//		}
-//		
-//		Client.removeSession(this);
-//		Client.setUser(null);
-//		
-//		mNavigationDrawerFragment.changeDataset(drawerItems_logout);
-//		redirect(1);
-//	}
+	private void logout() {
+		Fragment fragment = (Fragment) this.getCurrentSection().getTargetFragment();
+//		this.getf
+		if(fragment instanceof SocialNetworkChooserFragment){
+			SocialNetworkManager mSocialNetworkManager = ((SocialNetworkChooserFragment) fragment).getSocialNetworkManager();
+			if(mSocialNetworkManager != null && !mSocialNetworkManager.getInitializedSocialNetworks().isEmpty()) {
+                List<SocialNetwork> socialNetworks = mSocialNetworkManager.getInitializedSocialNetworks();
+                for (SocialNetwork socialNetwork : socialNetworks) {
+                	if(socialNetwork.isConnected()){
+	                	socialNetwork.cancelAll();
+	                    socialNetwork.logout();
+                	}
+                }
+            }
+		}
+		
+		if(fragment instanceof ShareContentFragment){
+			SocialNetwork socialNetwork = ((ShareContentFragment) fragment).getSocialNetwork();
+			if(socialNetwork != null && socialNetwork.isConnected()){
+            	socialNetwork.cancelAll();
+                socialNetwork.logout();
+        	}
+		}
+		
+		Client.removeSession(this);
+		Client.setUser(null);
+		
+		afterLogout(false);
+	}
 
 	@Override
 	public void onloginComplete(User user) {
 		//Toast.makeText(getApplicationContext(), "In Activity email--> "+user.getEmail(), Toast.LENGTH_SHORT).show();
 //		mNavigationDrawerFragment.changeDataset(drawerItems_login);
 //		redirect(1);
+		afterLogin(false);
 	}
 
 	@Override
@@ -376,18 +369,19 @@ public class MainActivity extends MaterialNavigationDrawer implements
 		//Toast.makeText(getApplicationContext(), "In Activity email--> "+user.getEmail(), Toast.LENGTH_SHORT).show();
 //		mNavigationDrawerFragment.changeDataset(drawerItems_login);
 //		redirect(1);
+		afterLogin(false);
 	}
 	
-	private void initImageLoader(int screenHeight, int screenWidth){
-		int longest = (screenHeight > screenWidth ? screenHeight : screenHeight) / 2;
-		 ImageCacheParams cacheParams = new ImageCacheParams(MainActivity.this, IMAGE_CACHE_DIR);
-		 cacheParams.setMemCacheSizePercent(0.25f); // Set memory cache to 25% of app memory
-		 imageLoader = new ImageFetcher(MainActivity.this, longest);
-		 imageLoader.setLoadingImage(R.drawable.empty_photo);
-		 imageLoader.useLoadingImageForFadein(true);
-		 imageLoader.addImageCache(MainActivity.this.getSupportFragmentManager(), cacheParams);
-		 imageLoader.setCallback(MainActivity.this);
-	}
+//	private void initImageLoader(int screenHeight, int screenWidth){
+//		int longest = (screenHeight > screenWidth ? screenHeight : screenHeight) / 2;
+//		 ImageCacheParams cacheParams = new ImageCacheParams(MainActivity.this, IMAGE_CACHE_DIR);
+//		 cacheParams.setMemCacheSizePercent(0.25f); // Set memory cache to 25% of app memory
+//		 imageLoader = new ImageFetcher(MainActivity.this, longest);
+//		 imageLoader.setLoadingImage(R.drawable.empty_photo);
+//		 imageLoader.useLoadingImageForFadein(true);
+//		 imageLoader.addImageCache(MainActivity.this.getSupportFragmentManager(), cacheParams);
+//		 imageLoader.setCallback(MainActivity.this);
+//	}
 
 	
 	
@@ -470,5 +464,43 @@ public class MainActivity extends MaterialNavigationDrawer implements
 	public void onRegisterClicked() {
 //		redirect(2);
 		
+	}
+	
+	public void afterLogin(boolean isOnCreate){
+		if(!isOnCreate){
+			this.clearSectionsView();
+			this.initLists();
+		}
+		sectionLogin= newSection(getString(R.string.title_login), LoginFragment.newInstance(1)).setSectionColor(getResources().getColor(R.color.colorPrimary));
+        sectionProfile = newSection(getString(R.string.title_profile), ProfileFragment.newInstance(0)).setSectionColor(getResources().getColor(R.color.colorPrimary));
+		MaterialAccount account = new MaterialAccount(this.getResources(),"NeoKree","neokree@gmail.com", R.drawable.photo2, R.drawable.profile_bg);
+        this.addAccount(account);
+		this.addSection(sectionProfile);
+        this.addSection(newSection(getString(R.string.title_share),SocialNetworkChooserFragment.newInstance(3)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        if(!isOnCreate){
+	        this.setCurrentAccount(account);
+	        this.setCurrentSection(sectionProfile);
+	        this.onClickCustom(sectionProfile);
+	        sectionProfile.select();
+	        this.setSectionsTouch(true);
+        }
+	}
+	
+	public void afterLogout(boolean isOnCreate){
+		if(!isOnCreate){
+			this.clearSectionsView();
+			this.initLists();
+		}
+		sectionLogin= newSection(getString(R.string.title_login), LoginFragment.newInstance(1)).setSectionColor(getResources().getColor(R.color.colorPrimary));
+        sectionProfile = newSection(getString(R.string.title_profile), ProfileFragment.newInstance(0)).setSectionColor(getResources().getColor(R.color.colorPrimary));
+    	this.addSection(sectionLogin);
+        this.addSection(newSection(getString(R.string.title_registration),RegistrationFragment.newInstance(2)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        this.addSection(newSection(getString(R.string.title_share),SocialNetworkChooserFragment.newInstance(3)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        if(!isOnCreate){
+	        this.setCurrentSection(sectionLogin);
+	        this.onClickCustom(sectionLogin);
+	        sectionLogin.select();
+	        this.setSectionsTouch(true);
+        }
 	}
 }

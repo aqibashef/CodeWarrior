@@ -61,5 +61,6 @@
     <style name="KitkatStatusBar" parent="MaterialNavigationDrawerTheme.Light.DarkActionBar.TranslucentKitKatStatusBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="singleAccount">true</item>
     </style>
 </resources>
