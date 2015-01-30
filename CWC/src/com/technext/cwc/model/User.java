@@ -8,11 +8,25 @@ public class User {
 	private String email;
 	private String firstname;
 	private String lastname;
+	private String mobile_no;
 	private String profile_pic_url;
 	private String session_token;
 	private String profile_pic_extension;
-	
+	private Location location;
+	private Long server_id;
 
+	public Long getServer_id() {
+		return server_id;
+	}
+	public void setServer_id(Long server_id) {
+		this.server_id = server_id;
+	}
+	public Location getLocation() {
+		return location;
+	}
+	public void setLocation(Location location) {
+		this.location = location;
+	}
 	public Long getId() {
 		return id;
 	}
@@ -67,6 +81,12 @@ public class User {
 	}
 	public void setProfile_pic_extension(String profile_pic_extension) {
 		this.profile_pic_extension = profile_pic_extension;
+	}
+	public String getMobile_no() {
+		return mobile_no;
+	}
+	public void setMobile_no(String mobile_no) {
+		this.mobile_no = mobile_no;
 	}
 	
 }
