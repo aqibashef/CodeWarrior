@@ -72,9 +72,11 @@ public class ProductListAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		
+		
+		
 		Product product = (Product) getItem(position);
 		
-		String url = product.getImages().get(0).getImage_url();
+		String url = product.getImages().get(0).getServer_url();
 		if(url == null || url.equalsIgnoreCase("")){
 			Picasso.with(context).load(R.drawable.empty_photo)
 			.placeholder(R.drawable.empty_photo)

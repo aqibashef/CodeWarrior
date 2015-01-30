@@ -1,7 +1,7 @@
 package com.technext.cwc.model;
 
 public class ProductImage {
-	private String image_url;
+	private String local_url;
 	private Long id;
 	private String server_url;
 
@@ -21,13 +21,14 @@ public class ProductImage {
 		this.server_url = server_url;
 	}
 
-	public String getImage_url() {
-		return image_url;
+	public String getLocal_url() {
+		return local_url;
 	}
 
-	public void setImage_url(String image_url) {
-		this.image_url = image_url;
+	public void setLocal_url(String local_url) {
+		this.local_url = local_url;
 	}
-	
+
+
 	
 }
