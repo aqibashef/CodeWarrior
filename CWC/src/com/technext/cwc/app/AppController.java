@@ -1,5 +1,6 @@
 package com.technext.cwc.app;
 
+import com.activeandroid.ActiveAndroid;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
@@ -9,13 +10,13 @@ import com.technext.cwc.utils.LruBitmapCache;
 import android.app.Application;
 import android.text.TextUtils;
 
-public class AppController extends Application{
+public class AppController extends com.activeandroid.app.Application {
 
 	public static final String TAG = AppController.class
             .getSimpleName();
  
     private RequestQueue mRequestQueue;
-    private ImageLoader mImageLoader;
+  // private ImageLoader mImageLoader;
  
     private static AppController mInstance;
  
@@ -23,6 +24,7 @@ public class AppController extends Application{
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+        ActiveAndroid.initialize(this);
     }
  
     public static synchronized AppController getInstance() {
@@ -37,7 +39,7 @@ public class AppController extends Application{
         return mRequestQueue;
     }
  
-    public ImageLoader getImageLoader() {
+   /* public ImageLoader getImageLoader() {
         getRequestQueue();
         if (mImageLoader == null) {
             mImageLoader = new ImageLoader(this.mRequestQueue,
@@ -45,7 +47,7 @@ public class AppController extends Application{
         }
         return this.mImageLoader;
     }
- 
+ */
     public <T> void addToRequestQueue(Request<T> req, String tag) {
         // set the default tag if tag is empty
         req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);

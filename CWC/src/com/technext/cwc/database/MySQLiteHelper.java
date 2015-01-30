@@ -2,6 +2,7 @@ package com.technext.cwc.database;
 
 import com.technext.cwc.database.entity.ProductEntity;
 import com.technext.cwc.database.entity.ProductImagesEntity;
+import com.technext.cwc.database.entity.SettingsEntity;
 
 import android.content.Context;
 import android.database.SQLException;
@@ -50,18 +51,35 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 		TableCreateQueryBuilder  tableCreateQueryBuilder = new TableCreateQueryBuilder(ProductEntity.TABLE_NAME);
 		String createProductTableQuery = tableCreateQueryBuilder
 			.addId()
+			.addIntegerColumn(ProductEntity.COLUMN_SERVER_ID)
 			.addStringColumn(ProductEntity.COLUMN_TITLE)
 			.addStringColumn(ProductEntity.COLUMN_DESCRIPTION)
+			.addStringColumn(ProductEntity.COLUMN_PRICE_TYPE)
+			.addRealColumn(ProductEntity.COLUMN_PRICE)
+			.addStringColumn(ProductEntity.COLUMN_USER_NAME)
+			.addStringColumn(ProductEntity.COLUMN_USER_EMAIL)
+			.addStringColumn(ProductEntity.COLUMN_USER_PHONE)
 			.addStringColumn(ProductEntity.COLUMN_CATEORY)
-			.addStringColumn(ProductEntity.COLUMN_TYPE)
-			.addStringColumn(ProductEntity.COLUMN_LOCATION).getQuery();
+			.addStringColumn(ProductEntity.COLUMN_LOCATION)
+	
+			.getQuery();
 		
 		String productImagesTableQuery = tableCreateQueryBuilder
 				.resetWithTable(ProductImagesEntity.TABLE_NAME)
 				.addId()
-				.addStringColumn(ProductImagesEntity.COLUMN_URL)
-				.addIntegerColumn(ProductImagesEntity.COLUMN_IS_LOCAL).getQuery();
+				.addStringColumn(ProductImagesEntity.COLUMN__SERVER_URL)
+				.addIntegerColumn(ProductImagesEntity.COLUMN_LOCAL_URL).getQuery();
+		
+		
+		String productSettingsTableQuery = tableCreateQueryBuilder
+				.resetWithTable(SettingsEntity.TABLE_NAME)
+				.addId()
+				.addIntegerColumn(SettingsEntity.COLUMN_PRODUCT_ID)
+				.addStringColumn(SettingsEntity.COLUMN__KEY)
+				.addIntegerColumn(SettingsEntity.COLUMN__VALUE).getQuery();
+		
 		database.execSQL(createProductTableQuery);
 		database.execSQL(productImagesTableQuery);
+		database.execSQL(productSettingsTableQuery);
 	}
 }

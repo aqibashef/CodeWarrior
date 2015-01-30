@@ -4,10 +4,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 public class Product {
 	private Long id;
+	private Long server_id;
 	private String title;
 	private String description;
 	private String price_type;
@@ -22,16 +24,15 @@ public class Product {
 	private Location location;
 	private Location sub_location;
 	private List<ProductImage> images;
-	private Long server_id;
+	
 	private Long view_count;
 	private String created_at;
 	private String updated_at;
-	private Settings settings;
+	private HashMap<String, String> settings;
 	
 	DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy:hh-mm-ss");
 	
 	public Date getCreated_at() {
-		String inputStr = "11-11-2012";
 		
 		Date inputDate = null;
 		try {
@@ -154,13 +155,10 @@ public class Product {
 	public void setSub_category(Category sub_category) {
 		this.sub_category = sub_category;
 	}
-	public Settings getSettings() {
+	public HashMap<String, String> getSettings() {
 		return settings;
 	}
-	public void setSettings(Settings settings) {
+	public void setSettings(HashMap<String, String> settings) {
 		this.settings = settings;
 	}
-	
-	
-	
 }
