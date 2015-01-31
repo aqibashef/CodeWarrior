@@ -27,5 +27,23 @@ public class Location extends Model {
  		        .execute();
 
  	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public List<SubLocation> getSub_locations() {
+		return sub_locations;
+	}
+
+	public void setSub_locations(List<SubLocation> sub_locations) {
+		this.sub_locations = sub_locations;
+	}
+ 	
+ 	
  	
 }
