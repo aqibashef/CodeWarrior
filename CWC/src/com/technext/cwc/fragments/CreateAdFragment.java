@@ -119,7 +119,8 @@ public class CreateAdFragment extends Fragment implements OnClickListener {
 			
 			@Override
 			public void onClick(View v) {
-				
+				Toast.makeText(getActivity(), "Successfully submitted", Toast.LENGTH_LONG).show();
+				((MainActivity)getActivity()).reCreateAd();
 			}
 		});
 		

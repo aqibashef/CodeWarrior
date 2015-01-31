@@ -276,13 +276,14 @@ public class MainActivity extends MaterialNavigationDrawer implements
 		this.initLists();
 		
 		sectionLogin= newSection(getString(R.string.title_login), LoginFragment.newInstance(1)).setSectionColor(getResources().getColor(R.color.colorPrimary));
-        sectionProfile = newSection(getString(R.string.title_profile), ProfileFragment.newInstance(0)).setSectionColor(getResources().getColor(R.color.colorPrimary));
+//        sectionProfile = newSection(getString(R.string.title_profile), ProfileFragment.newInstance(0)).setSectionColor(getResources().getColor(R.color.colorPrimary));
         MaterialSection selectionRegistration = newSection(getString(R.string.title_registration),RegistrationFragment.newInstance(2));
         this.addSection(sectionLogin);
         this.addSection(selectionRegistration.setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        this.addSection(newSection("Advertisements", ProductDetailsFragment.newInstance(4)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
         this.addSection(newSection(getString(R.string.title_share),SocialNetworkChooserFragment.newInstance(3)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
-        this.addSection(newSection("Product Details",ProductDetailsFragment.newInstance(4)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
-        this.addSection(newSection("Create Ad", CreateAdFragment.newInstance(5)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+//        this.addSection(newSection("Product Details",ProductDetailsFragment.newInstance(4)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+//        this.addSection(newSection("Create Ad", CreateAdFragment.newInstance(5)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
        
         this.setCurrentSection(selectionRegistration);
         this.onClickCustom(selectionRegistration);
@@ -297,18 +298,18 @@ public class MainActivity extends MaterialNavigationDrawer implements
 		}
 		sectionLogin= newSection(getString(R.string.title_login), LoginFragment.newInstance(1)).setSectionColor(getResources().getColor(R.color.colorPrimary));
         sectionProfile = newSection(getString(R.string.title_profile), ProfileFragment.newInstance(0)).setSectionColor(getResources().getColor(R.color.colorPrimary));
-		MaterialAccount account = new MaterialAccount(this.getResources(),"NeoKree","neokree@gmail.com", R.drawable.photo2, R.drawable.profile_bg);
+		MaterialAccount account = new MaterialAccount(this.getResources(),"Klassify","klassify@gmail.com", R.drawable.photo2, R.drawable.profile_bg);
         this.addAccount(account);
 		this.addSection(sectionProfile);
-        this.addSection(newSection(getString(R.string.title_share),SocialNetworkChooserFragment.newInstance(3)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
-        this.addSection(newSection("Product List",new ProductListFragment()).setSectionColor(getResources().getColor(R.color.colorPrimary)));
-        this.addSection(newSection("Product Details",ProductDetailsFragment.newInstance(4)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        this.addSection(newSection("Advertisements", ProductDetailsFragment.newInstance(4)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+//        this.addSection(newSection("Product Details",ProductDetailsFragment.newInstance(4)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
         this.addSection(newSection("Create Ad",new CreateAdFragment()).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        this.addSection(newSection(getString(R.string.title_share),SocialNetworkChooserFragment.newInstance(3)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
         this.addBottomSection(newSection("Logout",R.drawable.ic_settings_black_24dp,new MaterialSectionListener() {
 			
 			@Override
 			public void onClick(MaterialSection section) {
-				Toast.makeText(MainActivity.this, "clicked", Toast.LENGTH_LONG).show();
+				logout();
 			}
 		}));
         if(!isOnCreate){
@@ -320,18 +321,49 @@ public class MainActivity extends MaterialNavigationDrawer implements
         }
 	}
 	
+	public void reCreateAd(){
+			this.clearSectionsView();
+			this.initLists();
+		
+		sectionLogin= newSection(getString(R.string.title_login), LoginFragment.newInstance(1)).setSectionColor(getResources().getColor(R.color.colorPrimary));
+        sectionProfile = newSection(getString(R.string.title_profile), ProfileFragment.newInstance(0)).setSectionColor(getResources().getColor(R.color.colorPrimary));
+		MaterialAccount account = new MaterialAccount(this.getResources(),"Klassify","klassify@gmail.com", R.drawable.photo2, R.drawable.profile_bg);
+		MaterialSection selectionCreateAd = newSection("Create Ad",new CreateAdFragment());
+        this.addAccount(account);
+		this.addSection(sectionProfile);
+        this.addSection(newSection("Advertisements", ProductDetailsFragment.newInstance(4)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+//        this.addSection(newSection("Product Details",ProductDetailsFragment.newInstance(4)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        this.addSection(selectionCreateAd.setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        this.addSection(newSection(getString(R.string.title_share),SocialNetworkChooserFragment.newInstance(3)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        this.addBottomSection(newSection("Logout",R.drawable.ic_settings_black_24dp,new MaterialSectionListener() {
+			
+			@Override
+			public void onClick(MaterialSection section) {
+				logout();
+			}
+		}));
+        
+	        this.setCurrentAccount(account);
+	        this.setCurrentSection(selectionCreateAd);
+	        this.onClickCustom(selectionCreateAd);
+	        selectionCreateAd.select();
+	        this.setSectionsTouch(true);
+        
+	}
+	
 	public void afterLogout(boolean isOnCreate){
 		if(!isOnCreate){
 			this.clearSectionsView();
 			this.initLists();
 		}
 		sectionLogin= newSection(getString(R.string.title_login), LoginFragment.newInstance(1)).setSectionColor(getResources().getColor(R.color.colorPrimary));
-        sectionProfile = newSection(getString(R.string.title_profile), ProfileFragment.newInstance(0)).setSectionColor(getResources().getColor(R.color.colorPrimary));
+//        sectionProfile = newSection(getString(R.string.title_profile), ProfileFragment.newInstance(0)).setSectionColor(getResources().getColor(R.color.colorPrimary));
     	this.addSection(sectionLogin);
         this.addSection(newSection(getString(R.string.title_registration),RegistrationFragment.newInstance(2)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        this.addSection(newSection("Advertisements", ProductDetailsFragment.newInstance(4)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
         this.addSection(newSection(getString(R.string.title_share),SocialNetworkChooserFragment.newInstance(3)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
-        this.addSection(newSection("Product Details",ProductDetailsFragment.newInstance(4)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
-        this.addSection(newSection("Create Ad",new CreateAdFragment()).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        
+//        this.addSection(newSection("Create Ad",new CreateAdFragment()).setSectionColor(getResources().getColor(R.color.colorPrimary)));
         if(!isOnCreate){
 	        this.setCurrentSection(sectionLogin);
 	        this.onClickCustom(sectionLogin);
