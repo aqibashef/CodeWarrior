@@ -72,7 +72,7 @@
 		            android:textSize="26sp"
 		            android:layout_alignParentLeft="true"
 		            android:layout_below="@+id/product_details_type"
-		            android:text="Loren ipsum Vorijfv lalrjn jfjdo lsjif fsosdjns isfs"/>
+		            android:text=""/>
 		        
 		        <TextView 
 		            android:id="@+id/product_details_user_name"
@@ -91,14 +91,7 @@
 		            android:layout_marginTop="15dp"
 		            android:layout_alignParentLeft="true"
 		            android:layout_below="@+id/product_details_user_name"
-		            android:text="Description Description Description Description Description Description Description 
-		            Description Description Description Description Description Description Description Description Description 
-		            Description Description Description Description Description Description Description Description Description 
-		            Description Description Description Description Description Description Description Description Description 
-		            Description Description Description Description Description Description Description Description Description 
-		            Description Description Description Description Description Description Description Description 
-		            Description Description Description Description Description Description Description Description 
-		            Description Description Description Description Description "/>
+		            android:text=""/>
 	        </RelativeLayout>
 		</RelativeLayout>
 	</com.gc.materialdesign.views.ScrollView>

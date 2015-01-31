@@ -15,6 +15,7 @@ import com.technext.cwc.http.Client;
 import com.technext.cwc.listener.VolleyResponseHandler;
 import com.technext.cwc.share.SMSShare;
 import com.technext.cwc.share.TMessaging;
+import com.technext.cwc.utils.TCallManager;
 import com.technext.cwc.utils.URLUtils;
 
 import android.os.Bundle;
@@ -43,6 +44,7 @@ public class ProductDetailsFragment extends Fragment implements OnClickListener 
 	private LayoutRipple product_details_call;
 	private LayoutRipple product_details_email;
 	private LayoutRipple product_details_sms;
+	private ImageView imageViewBg ;
 	
 	private Product product;
 	
@@ -68,25 +70,10 @@ public class ProductDetailsFragment extends Fragment implements OnClickListener 
 				false);
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
 				MainActivity.screenWidth, MainActivity.screenHeight / 3);
-		ImageView imageViewBg = (ImageView) rootView.findViewById(R.id.product_details_image);
+		imageViewBg = (ImageView) rootView.findViewById(R.id.product_details_image);
 		imageViewBg.setLayoutParams(params);
 		
-		String productimageUrl = "";
-		if(product.images != null){
-			productimageUrl = product.images.get(0).server_url;
-		}
-		if(productimageUrl == null){
-			productimageUrl = "https://pbs.twimg.com/profile_images/1773564270/anonymous-logo-1.jpg";
-		}
-		
-		Picasso.with(getActivity()).load(productimageUrl)
-		.placeholder(R.drawable.empty_photo)
-		.error(R.drawable.empty_photo)
-		
-		.into(imageViewBg);
-		
-		
-		
+				
 		product_details_time = (TextView) rootView.findViewById(R.id.product_details_time);
 		product_details_price = (TextView) rootView.findViewById(R.id.product_details_price);
 		product_details_location = (TextView) rootView.findViewById(R.id.product_details_location);
@@ -95,7 +82,9 @@ public class ProductDetailsFragment extends Fragment implements OnClickListener 
 		product_details_description = (TextView) rootView.findViewById(R.id.product_details_description);
 		product_details_call =  (LayoutRipple) rootView.findViewById(R.id.product_details_call);
 		product_details_email =  (LayoutRipple) rootView.findViewById(R.id.product_details_email);
+		product_details_email.setOnClickListener(this);
 		product_details_sms =  (LayoutRipple) rootView.findViewById(R.id.product_details_sms);
+		product_details_sms.setOnClickListener(this);
 		
 		HashMap<String,String> urlParams = new HashMap<String, String>();
 		
@@ -121,6 +110,22 @@ public class ProductDetailsFragment extends Fragment implements OnClickListener 
 			product_details_product_name.setText(product.getTitle());
 			product_details_description.setText(product.getDescription());
 			
+			String productimageUrl = "";
+			if(product.images != null){
+				productimageUrl = product.images.get(0).server_url;
+			}
+			if(productimageUrl == null){
+				productimageUrl = "https://pbs.twimg.com/profile_images/1773564270/anonymous-logo-1.jpg";
+			}
+			
+			Picasso.with(getActivity()).load(productimageUrl)
+			.placeholder(R.drawable.empty_photo)
+			.error(R.drawable.empty_photo)
+			
+			.into(imageViewBg);
+			
+			
+
 			
 		}
 	}
@@ -147,7 +152,8 @@ public class ProductDetailsFragment extends Fragment implements OnClickListener 
 		
 		switch (v.getId()) {
 		case R.id.product_details_call:
-			
+			TCallManager callManager = new TCallManager(getActivity());
+			callManager.openInDialer("+8801728163147");
 			break;
 		case R.id.product_details_email:
 			SMSShare emailHandler = new SMSShare(getActivity());
