@@ -47,6 +47,7 @@ public class CategoryActivity extends Activity {
 		if(resultCode == Activity.RESULT_OK && requestCode == 100){
 			data.putExtra(CATEGORY_KEY, category);
 			setResult(RESULT_OK, data);
+			Toast.makeText(getApplicationContext(), category, Toast.LENGTH_SHORT).show();
 			finish();
 		}
 	}

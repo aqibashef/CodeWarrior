@@ -8,19 +8,21 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Toast;
 
 public class SubCategoryActivity extends Activity {
 	private ListView listView;
 	private String[] list_sort= {"Most Recent", "Most Viewed", "Price Low to High", "Price High to Low"};
 	private String sub_category;
 	public static final String SUB_CATEGORY_KEY = "sub_category_key";
+	Intent intent;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_category_subcategory);
 		
-		Intent intent = getIntent();
+		intent = getIntent();
 		
 		
 		listView = (ListView) findViewById(R.id.activity_category_subcategory_listview);
@@ -32,9 +34,10 @@ public class SubCategoryActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				sub_category = adapter.getItem(position);
-				Intent intent = new Intent(getApplicationContext(), SubCategoryActivity.class);
+				intent = new Intent(getApplicationContext(), SubCategoryActivity.class);
 				intent.putExtra(SUB_CATEGORY_KEY, sub_category);
 				setResult(RESULT_OK, intent);
+				Toast.makeText(getApplicationContext(), sub_category, Toast.LENGTH_SHORT).show();
 				finish();
 			}
 		});

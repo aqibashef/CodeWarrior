@@ -19,6 +19,7 @@ import android.webkit.WebView.FindListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CreateAdFragment extends Fragment implements OnClickListener {
 	private LayoutRipple layoutRipple_choose_category, layoutRipple_description, layoutRipple_your_info;
@@ -55,6 +56,7 @@ public class CreateAdFragment extends Fragment implements OnClickListener {
 		super.onActivityResult(requestCode, resultCode, data);
 		
 		if(resultCode == Activity.RESULT_OK){
+			Toast.makeText(getActivity(), ""+requestCode, Toast.LENGTH_SHORT).show();
 			if(requestCode == 123){
 				textView_choose_category.setText(data.getStringExtra(CategoryActivity.CATEGORY_KEY)+", "+data.getStringExtra(SubCategoryActivity.SUB_CATEGORY_KEY));
 			}
