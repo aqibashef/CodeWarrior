@@ -31,7 +31,10 @@ public class URLUtils {
 		
 		// product lists--> http://www.mocky.io/v2/54c7dde01f6a71b4151514f6
 		public static final String URL_PRODUCTS = "54cbe1e096d6b24b15431faf";
-		public static final String URL__SEARCH_PRODUCTS = "54c7dde01f6a71b4151514f6";
+		public static final String URL__SEARCH_PRODUCTS = "54cc7aa122f5cf490407e0f8";
+		
+		//http://www.mocky.io/v2/54cc887b22f5cf450507e10a
+		public static final String URL_SINGLE_PRODUCT = "54cc887b22f5cf450507e10a";
 		
 		public static String getAbsoluteUrl(String relativeUrl) {
 			return URL_BASE + relativeUrl;
@@ -56,6 +59,7 @@ public class URLUtils {
 		public static final String PARAM_CRITERIA = "criteria";
 		public static final String PARAM_MIN_PRICE = "min_price";
 		public static final String PARAM_MAX_PRICE = "max_price";
+		public static final String PARAM_SEARCH = "search";
 		
 		
 		

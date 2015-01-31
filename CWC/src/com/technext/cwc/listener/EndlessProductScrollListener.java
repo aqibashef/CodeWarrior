@@ -65,7 +65,7 @@ public class EndlessProductScrollListener implements OnScrollListener{
 			}
 		}
 		
-		if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + threshold)) {
+		if (!loading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + threshold) && (totalItemCount < 3000-20)) {
 	        //show list loading footerview
 			//footerView = ((LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.list_loading_item, null);
 			//listview.addFooterView(footerView);

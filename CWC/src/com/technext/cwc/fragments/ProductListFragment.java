@@ -31,15 +31,20 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.DataSetObserver;
+import android.inputmethodservice.KeyboardView.OnKeyboardActionListener;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.method.KeyListener;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -48,9 +53,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
-public class ProductListFragment extends Fragment implements OnClickListener{
+public class ProductListFragment extends Fragment implements OnClickListener, OnEditorActionListener{
 
 	private ListView productListVew;
 	private ProductListAdapter productListAdapter;
@@ -70,6 +77,7 @@ public class ProductListFragment extends Fragment implements OnClickListener{
 	ArrayAdapter<String> adapter_sort;
 	
 	private SplashProgressDialog progress;
+	private EndlessProductScrollListener endlessScroolListener;
 	
 	public ProductListFragment(){
 		
@@ -97,11 +105,13 @@ public class ProductListFragment extends Fragment implements OnClickListener{
 				R.layout.list_loading_item, null);
 		productListVew.addFooterView(footerView);
 		footerView.setVisibility(View.GONE); // default invisible
-		productListVew.setOnScrollListener(new EndlessProductScrollListener(productListVew,footerView,
-				productListAdapter, getActivity()));
+		endlessScroolListener = new EndlessProductScrollListener(productListVew,footerView,
+				productListAdapter, getActivity());
+		productListVew.setOnScrollListener(endlessScroolListener);
 		productListVew.setAdapter(productListAdapter);
 		
 		search_box = (EditText) rootView.findViewById(R.id.search_box); 
+		search_box.setOnEditorActionListener(this);
 		
 		filter_location = (Spinner) rootView.findViewById(R.id.filter_location);
 		filter_price = (ButtonFlat) rootView.findViewById(R.id.filter_price);
@@ -132,6 +142,8 @@ public class ProductListFragment extends Fragment implements OnClickListener{
 									products = response.getProducts();
 									//productListAdapter.notifyDataSetChanged();
 									productListAdapter.setItems(products);
+									endlessScroolListener.setPreviousTotal(0);
+									productListAdapter.notifyDataSetChanged();
 									
 								}
 								
@@ -189,6 +201,7 @@ public class ProductListFragment extends Fragment implements OnClickListener{
 							products = response.getProducts();
 							
 							productListAdapter.setItems(products);
+							endlessScroolListener.setPreviousTotal(0);
 							productListAdapter.notifyDataSetChanged();
 							
 						}
@@ -249,6 +262,7 @@ public class ProductListFragment extends Fragment implements OnClickListener{
 											products = response.getProducts();
 											
 											productListAdapter.setItems(products);
+											endlessScroolListener.setPreviousTotal(0);
 											productListAdapter.notifyDataSetChanged();
 											
 										}
@@ -289,9 +303,11 @@ public class ProductListFragment extends Fragment implements OnClickListener{
 				products = response.getProducts();
 				//productListAdapter.notifyDataSetChanged();
 				productListAdapter.setItems(products);
+				endlessScroolListener.setPreviousTotal(0);
+				productListAdapter.notifyDataSetChanged();
 				
 			}
-			Log.e("product list size", "-->"+products.size());
+			//Log.e("product list size", "-->"+products.size());
 		}
 
 		@Override
@@ -300,6 +316,9 @@ public class ProductListFragment extends Fragment implements OnClickListener{
 			
 		}
 	};
+	
+	
+	
 
 	@Override
 	public void onClick(View v) {
@@ -377,6 +396,7 @@ public class ProductListFragment extends Fragment implements OnClickListener{
 											products = response.getProducts();
 											
 											productListAdapter.setItems(products);
+											endlessScroolListener.setPreviousTotal(0);
 											productListAdapter.notifyDataSetChanged();
 											
 										}
@@ -423,5 +443,50 @@ public class ProductListFragment extends Fragment implements OnClickListener{
 		}		
 		
 		Client.volleyRawPost(URLUtils.URL_PRODUCTS, null, Products.class, null, handler);
+	}
+
+
+
+	
+
+	
+
+	@Override
+	public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+		// TODO Auto-generated method stub
+		//Toast.makeText(getActivity(), "sfjhsdjf", Toast.LENGTH_SHORT).show();
+		String searchText = search_box.getText().toString();
+		if(searchText != null && !searchText.equalsIgnoreCase("")){
+			HashMap<String,String> params = new HashMap<String, String>();
+			params.put(URLUtils.PARAM_SEARCH, searchText);
+			
+			progress.show();
+			Client.volleyRawPost(URLUtils.URL__SEARCH_PRODUCTS, params, Products.class, null, new VolleyResponseHandler<Products>() {
+
+				@Override
+				public void onSuccess(Products response) {
+					progress.hide();
+					if(response != null){
+						products = response.getProducts();
+						//productListAdapter.notifyDataSetChanged();
+						productListAdapter.setItems(products);
+						endlessScroolListener.setPreviousTotal(0);
+						productListAdapter.notifyDataSetChanged();
+						
+					}
+					
+				}
+
+				@Override
+				public void onError(VolleyError error) {
+					// TODO Auto-generated method stub
+					progress.hide();
+					
+				}
+			});
+
+		}
+				
+		return false;
 	}
 }
