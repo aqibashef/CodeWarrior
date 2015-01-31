@@ -1,6 +1,8 @@
 package com.technext.cwc.fragments;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import com.android.volley.VolleyError;
@@ -8,11 +10,18 @@ import com.gc.materialdesign.views.ButtonFlat;
 import com.technext.cwc.R;
 import com.technext.cwc.ViewPagerActivity;
 import com.technext.cwc.adapter.ProductListAdapter;
+import com.technext.cwc.database.model.Categories;
+import com.technext.cwc.database.model.Category;
+import com.technext.cwc.database.model.Location;
+import com.technext.cwc.database.model.Locations;
+import com.technext.cwc.database.model.Product;
+import com.technext.cwc.database.model.Products;
+import com.technext.cwc.dialog.SplashProgressDialog;
 import com.technext.cwc.http.Client;
 import com.technext.cwc.listener.EndlessProductScrollListener;
 import com.technext.cwc.listener.VolleyResponseHandler;
-import com.technext.cwc.model.Product;
-import com.technext.cwc.model.Products;
+
+
 import com.technext.cwc.utils.URLUtils;
 
 import android.annotation.SuppressLint;
@@ -21,6 +30,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -55,6 +65,12 @@ public class ProductListFragment extends Fragment implements OnClickListener{
 	private String[] list_category= {"Andra Pradesh","Arunachal Pradesh","Assam","Bihar","Haryana","Himachal Pradesh", "Jammu and Kashmir", "Jharkhand","Karnataka", "Kerala","Tamil Nadu"};
 	private String[] list_sort= {"Most Recent", "Most Viewed", "Price Low to High", "Price High to Low"};
 	
+	ArrayAdapter<String> adapter_location;
+	ArrayAdapter<String> adapter_category;
+	ArrayAdapter<String> adapter_sort;
+	
+	private SplashProgressDialog progress;
+	
 	public ProductListFragment(){
 		
 	}
@@ -71,6 +87,8 @@ public class ProductListFragment extends Fragment implements OnClickListener{
 			@Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_product_list, container,
 				false);
+		
+		progress = new SplashProgressDialog(getActivity());
 		
 		productListVew = (ListView) rootView.findViewById(R.id.productListView);
 		productListAdapter = new ProductListAdapter(getActivity(), products);
@@ -90,13 +108,55 @@ public class ProductListFragment extends Fragment implements OnClickListener{
 		filter_category = (Spinner) rootView.findViewById(R.id.filter_category);
 		sort_spinner = (Spinner) rootView.findViewById(R.id.sort_spinner);
 		
-		ArrayAdapter<String> adapter_location = new ArrayAdapter<String>(getActivity(),  R.layout.spinner_item, list_location);
-		ArrayAdapter<String> adapter_category = new ArrayAdapter<String>(getActivity(),  R.layout.spinner_item, list_category);
-		ArrayAdapter<String> adapter_sort = new ArrayAdapter<String>(getActivity(),  R.layout.spinner_item, list_sort);
+		adapter_location = new ArrayAdapter<String>(getActivity(),  R.layout.spinner_item, list_location);
+		adapter_category = new ArrayAdapter<String>(getActivity(),  R.layout.spinner_item, list_category);
+		adapter_sort = new ArrayAdapter<String>(getActivity(),  R.layout.spinner_item, list_sort);
 		
 		filter_location.setAdapter(adapter_location);
 		filter_category.setAdapter(adapter_category);
 		sort_spinner.setAdapter(adapter_sort);
+		sort_spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
+				progress.show();
+				filterBy(filter_location.getSelectedItem().toString(), 
+						filter_category.getSelectedItem().toString(),
+						sort_spinner.getSelectedItem().toString(), null, null, new VolleyResponseHandler<Products>() {
+
+							@Override
+							public void onSuccess(Products response) {
+								progress.dismiss();
+								if(response != null){
+									products = response.getProducts();
+									//productListAdapter.notifyDataSetChanged();
+									productListAdapter.setItems(products);
+									
+								}
+								
+							}
+
+							@Override
+							public void onError(VolleyError error) {
+								// TODO Auto-generated method stub
+								progress.dismiss();
+								
+							}
+						});
+				
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parent) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		
+		Client.volleyRawPost(URLUtils.URL_LOCATIONS, null, Locations.class, null, locationResponseHandler);
+		Client.volleyRawPost(URLUtils.URL_CATEGORIES, null, Categories.class, null, categoryResponseHandler);	
 		
 		filter_price.setOnClickListener(this);
 		
@@ -116,6 +176,33 @@ public class ProductListFragment extends Fragment implements OnClickListener{
 		int min = Integer.parseInt(min_s);
 		int max = Integer.parseInt(max_s);
 		
+		progress.show();
+		
+		filterBy(filter_location.getSelectedItem().toString(), 
+				filter_category.getSelectedItem().toString(),
+				sort_spinner.getSelectedItem().toString(), Double.valueOf(min), Double.valueOf(max),new VolleyResponseHandler<Products>() {
+
+					@Override
+					public void onSuccess(Products response) {
+						progress.hide();
+						if(response != null){
+							products = response.getProducts();
+							
+							productListAdapter.setItems(products);
+							productListAdapter.notifyDataSetChanged();
+							
+						}
+						
+					}
+
+					@Override
+					public void onError(VolleyError error) {
+						// 
+						progress.hide();
+						
+					}
+				});
+		
 		Toast.makeText(getActivity(), min_s+" "+max_s, Toast.LENGTH_LONG).show();
 		
 	}
@@ -125,6 +212,74 @@ public class ProductListFragment extends Fragment implements OnClickListener{
 		// TODO Auto-generated method stub
 		super.onAttach(activity);
 	}
+	
+	VolleyResponseHandler<Categories> categoryResponseHandler = new VolleyResponseHandler<Categories>() {
+
+		@Override
+		public void onSuccess(Categories response) {
+			if(response != null){
+				List<Category> categories = response.getCategories();
+				String[] categoriesArray = new String[categories.size()];
+				
+				Iterator<Category> iter = categories.iterator();
+				int i = 0;
+				while(iter.hasNext()){
+					Category category = iter.next();
+					categoriesArray[i] = category.name;
+					i++;
+				}
+				
+				list_category = categoriesArray;
+				filter_category.setAdapter(new ArrayAdapter<String>(getActivity(),  R.layout.spinner_item, list_category));
+				filter_category.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+					@Override
+					public void onItemSelected(AdapterView<?> parent,
+							View view, int position, long id) {
+						
+						progress.show();
+						filterBy(filter_location.getSelectedItem().toString(), 
+								filter_category.getSelectedItem().toString(),
+								sort_spinner.getSelectedItem().toString(), null, null, new VolleyResponseHandler<Products>() {
+
+									@Override
+									public void onSuccess(Products response) {
+										progress.hide();
+										if(response != null){
+											products = response.getProducts();
+											
+											productListAdapter.setItems(products);
+											productListAdapter.notifyDataSetChanged();
+											
+										}
+										
+									}
+
+									@Override
+									public void onError(VolleyError error) {
+										// TODO Auto-generated method stub
+										
+									}
+								});
+						
+					}
+
+					@Override
+					public void onNothingSelected(AdapterView<?> parent) {
+						
+						
+					}
+				});
+
+			}
+		}
+
+		@Override
+		public void onError(VolleyError error) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
 	
 	VolleyResponseHandler<Products> productsResponseHandler = new VolleyResponseHandler<Products>() {
 
@@ -181,5 +336,92 @@ public class ProductListFragment extends Fragment implements OnClickListener{
 			alertDialog.show();
 			break;
 		}
+	}
+	
+	
+	
+	
+	VolleyResponseHandler<Locations> locationResponseHandler = new VolleyResponseHandler<Locations>() {
+		
+		@Override
+		public void onSuccess(Locations response) {
+			if(response != null){
+				
+				List<Location> locations = response.getLocations();
+				Log.e("size", "-->"+locations.size());
+				String[] locationList = new String[locations.size()];
+				
+				Iterator<Location> iter = locations.iterator();
+				int i = 0;
+				while(iter.hasNext()){
+					Location location = iter.next();
+					locationList[i] = location.getName();
+					i++;
+				}
+				list_location = locationList;
+				filter_location.setAdapter(new ArrayAdapter<String>(getActivity(),  R.layout.spinner_item, list_location));
+				filter_location.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+					@Override
+					public void onItemSelected(AdapterView<?> parent,
+							View view, int position, long id) {
+						progress.show();
+						filterBy(filter_location.getSelectedItem().toString(), 
+								filter_category.getSelectedItem().toString(),
+								sort_spinner.getSelectedItem().toString(), null, null, new VolleyResponseHandler<Products>() {
+
+									@Override
+									public void onSuccess(Products response) {
+										progress.hide();
+										if(response != null){
+											products = response.getProducts();
+											
+											productListAdapter.setItems(products);
+											productListAdapter.notifyDataSetChanged();
+											
+										}
+										
+									}
+
+									@Override
+									public void onError(VolleyError error) {
+										progress.hide();
+										
+									}
+								});
+						
+					}
+
+					@Override
+					public void onNothingSelected(AdapterView<?> parent) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+			}
+			
+		}
+		
+		@Override
+		public void onError(VolleyError error) {
+			// TODO Auto-generated method stub
+			
+		}
+	};
+	
+	private void filterBy(String location, String category, String criteria, Double minPrice, Double maxPrice, VolleyResponseHandler<Products> handler){
+		HashMap<String,String> params = new HashMap<String, String>();
+		params.put(URLUtils.PARAM_LOCATION, location);
+		params.put(URLUtils.PARAM_CATEORY, category);
+		params.put(URLUtils.PARAM_CRITERIA, criteria);
+		
+		if(minPrice != null ){
+			params.put(URLUtils.PARAM_MIN_PRICE, ""+minPrice.toString());
+		}
+		if(maxPrice != null){
+			params.put(URLUtils.PARAM_MAX_PRICE, ""+maxPrice.toString());
+		}		
+		
+		Client.volleyRawPost(URLUtils.URL_PRODUCTS, null, Products.class, null, handler);
 	}
 }

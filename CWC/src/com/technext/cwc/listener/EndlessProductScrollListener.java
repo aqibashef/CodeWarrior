@@ -6,9 +6,10 @@ import java.util.Iterator;
 import com.android.volley.VolleyError;
 
 import com.technext.cwc.adapter.ProductListAdapter;
+import com.technext.cwc.database.model.Product;
+import com.technext.cwc.database.model.Products;
 import com.technext.cwc.http.Client;
-import com.technext.cwc.model.Product;
-import com.technext.cwc.model.Products;
+
 import com.technext.cwc.utils.URLUtils;
 
 import android.content.Context;

@@ -6,8 +6,9 @@ import com.gc.materialdesign.views.LayoutRipple;
 import com.squareup.picasso.Picasso;
 import com.technext.cwc.R;
 import com.technext.cwc.ViewPagerActivity;
+import com.technext.cwc.database.model.Product;
 import com.technext.cwc.http.Client;
-import com.technext.cwc.model.Product;
+
 
 import android.app.Activity;
 import android.content.Context;
@@ -41,7 +42,12 @@ public class ProductListAdapter extends BaseAdapter implements OnClickListener {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return products.size();
+		if(products == null){
+			return 0;
+		}else{
+			return products.size();
+		}
+	
 	}
 
 	@Override
@@ -81,7 +87,13 @@ public class ProductListAdapter extends BaseAdapter implements OnClickListener {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		
-		String url = product.getImages().get(0).getServer_url();
+		String url = "";
+		if(product.images!= null){
+			url = product.images.get(0).getServer_url();
+		}
+		
+		
+		
 		if(url == null || url.equalsIgnoreCase("")){
 			Picasso.with(context).load(R.drawable.empty_photo)
 			.placeholder(R.drawable.empty_photo)
@@ -99,7 +111,7 @@ public class ProductListAdapter extends BaseAdapter implements OnClickListener {
 		
 		holder.productTitle.setText(product.getTitle());
 		holder.productLocation.setText(product.getLocation().getName());
-		holder.productTime.setText("Time");
+		holder.productTime.setText(product.getCreated_at());
 		holder.productPriceType.setText(product.getPrice_type());
 		holder.productPrice.setText(product.getPrice().toString()+"/=");
 		
