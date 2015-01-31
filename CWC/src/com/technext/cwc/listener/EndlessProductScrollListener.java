@@ -103,5 +103,9 @@ public class EndlessProductScrollListener implements OnScrollListener{
 			
 		}
 	};
+	
+	public void setPreviousTotal(int previousTotal){
+		this.previousTotal = previousTotal;
+	}
 
 }
