@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical"
+    android:weightSum="19" >
+	<com.gc.materialdesign.views.ScrollView
+	    android:layout_weight="17"
+	    android:layout_width="match_parent"
+	    android:layout_height="0dp">
+	    
+		<RelativeLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent" >
+		        
+	        <ImageView
+	            android:id="@+id/product_details_image"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:scaleType="fitXY"
+	            android:src="@drawable/profile_bg" />
+	        
+	        <RelativeLayout
+			    android:layout_width="match_parent"
+			    android:layout_height="match_parent"
+			    android:layout_marginLeft="40dp"
+			    android:layout_marginRight="40dp"
+			    android:layout_marginTop="10dp"
+			    android:layout_below="@+id/product_details_image" >
+	        
+		        <TextView 
+		            android:id="@+id/product_details_time"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_alignParentLeft="true"
+		            android:textSize="14sp"
+		            android:text="21/01/2015"/>
+		        
+		        <TextView 
+		            android:id="@+id/product_details_price"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:textSize="18sp"
+		            android:layout_alignParentRight="true"
+		            android:text="15000/="/>
+		        
+		        <TextView 
+		            android:id="@+id/product_details_location"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:textSize="14sp"
+		            android:layout_alignParentLeft="true"
+		            android:layout_below="@+id/product_details_time"
+		            android:text="in Akhalia"/>
+		        
+		        <TextView 
+		            android:id="@+id/product_details_type"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:textSize="14sp"
+		            android:layout_alignParentRight="true"
+		            android:layout_below="@+id/product_details_price"
+		            android:text="Fixed"/>
+		        
+		        <TextView 
+		            android:id="@+id/product_details_product_name"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:textSize="26sp"
+		            android:layout_alignParentLeft="true"
+		            android:layout_below="@+id/product_details_type"
+		            android:text="Loren ipsum Vorijfv lalrjn jfjdo lsjif fsosdjns isfs"/>
+		        
+		        <TextView 
+		            android:id="@+id/product_details_user_name"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:textSize="13sp"
+		            android:layout_alignParentLeft="true"
+		            android:layout_below="@+id/product_details_product_name"
+		            android:text="-Eaiman Shoshi"/>
+		        
+		        <TextView 
+		            android:id="@+id/product_details_description"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:textSize="14sp"
+		            android:layout_marginTop="15dp"
+		            android:layout_alignParentLeft="true"
+		            android:layout_below="@+id/product_details_user_name"
+		            android:text="Description Description Description Description Description Description Description 
+		            Description Description Description Description Description Description Description Description Description 
+		            Description Description Description Description Description Description Description Description Description 
+		            Description Description Description Description Description Description Description Description Description 
+		            Description Description Description Description Description Description Description Description Description 
+		            Description Description Description Description Description Description Description Description 
+		            Description Description Description Description Description Description Description Description 
+		            Description Description Description Description Description "/>
+	        </RelativeLayout>
+		</RelativeLayout>
+	</com.gc.materialdesign.views.ScrollView>
+	
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="0dp"
+	    android:layout_weight="2"
+	    android:background="#ff5252"
+	    android:weightSum="3">
+		
+	    <com.gc.materialdesign.views.LayoutRipple
+            android:id="@+id/product_details_call"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:clickable="true"
+	        android:background="#ff5252"
+	        materialdesign:rippleSpeed="20.0"
+	        android:layout_weight="1">
+	        <LinearLayout 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical"
+	            android:gravity="center"
+	            android:layout_centerInParent="true">
+		        <ImageView 
+	                android:layout_width="wrap_content"
+	            	android:layout_height="wrap_content"
+	            	android:src="@drawable/ic_call"/>
+	            <TextView 
+	                android:layout_width="wrap_content"
+	            	android:layout_height="wrap_content"
+	            	android:text="Call"
+	            	android:textColor="#fff"/>
+            </LinearLayout>
+       </com.gc.materialdesign.views.LayoutRipple>
+       
+	    <View
+	        android:layout_width="2dp"
+	        android:layout_height="match_parent"
+	        android:background="#88CECECE"
+	        android:layout_marginTop="7dp"
+	        android:layout_marginBottom="7dp"/>
+       
+	    <com.gc.materialdesign.views.LayoutRipple
+            android:id="@+id/product_details_email"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:clickable="true"
+	        android:background="#ff5252"
+	        materialdesign:rippleSpeed="20.0"
+	        android:layout_weight="1">
+	        
+	        <LinearLayout 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical"
+	            android:gravity="center"
+	            android:layout_centerInParent="true">
+	            <ImageView 
+	                android:layout_width="wrap_content"
+	            	android:layout_height="wrap_content"
+	            	android:src="@drawable/ic_mail"/>
+	            <TextView 
+	                android:layout_width="wrap_content"
+	            	android:layout_height="wrap_content"
+	            	android:text="Email"
+	            	android:textColor="#fff"/>
+	        </LinearLayout>
+       </com.gc.materialdesign.views.LayoutRipple>
+       
+	    <View
+	        android:layout_width="2dp"
+	        android:layout_height="match_parent"
+	        android:background="#88CECECE"
+	        android:layout_marginTop="7dp"
+	        android:layout_marginBottom="7dp"/>
+       
+	    <com.gc.materialdesign.views.LayoutRipple
+            android:id="@+id/product_details_sms"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:clickable="true"
+	        android:background="#ff5252"
+	        materialdesign:rippleSpeed="20.0"
+	        android:layout_weight="1">
+	        
+	        <LinearLayout 
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:orientation="vertical"
+	            android:gravity="center"
+	            android:layout_centerInParent="true">
+		        <ImageView 
+	                android:layout_width="wrap_content"
+	            	android:layout_height="wrap_content"
+	            	android:src="@drawable/ic_sms"/>
+	            <TextView 
+	                android:layout_width="wrap_content"
+	            	android:layout_height="wrap_content"
+	            	android:text="Sms"
+	            	android:textColor="#fff"/>
+	         </LinearLayout>
+       </com.gc.materialdesign.views.LayoutRipple>
+	</LinearLayout>
+</LinearLayout>
