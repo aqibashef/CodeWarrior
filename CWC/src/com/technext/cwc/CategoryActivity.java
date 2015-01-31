@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 public class CategoryActivity extends ActionBarActivity {
 	private ListView listView;
-	private String[] list_sort= {"Most Recent", "Most Viewed", "Price Low to High", "Price High to Low"};
+	private String[] list_sort= {"Jobs", "Real Estates", "For Sale", "Items Wanted", "Services"};
 	private String category;
 	public static final String CATEGORY_KEY = "category_key";
 	
@@ -57,7 +57,7 @@ public class CategoryActivity extends ActionBarActivity {
 		if(resultCode == Activity.RESULT_OK && requestCode == 100){
 			data.putExtra(CATEGORY_KEY, category);
 			setResult(RESULT_OK, data);
-			Toast.makeText(getApplicationContext(), category, Toast.LENGTH_SHORT).show();
+//			Toast.makeText(getApplicationContext(), category, Toast.LENGTH_SHORT).show();
 			finish();
 		}
 	}
