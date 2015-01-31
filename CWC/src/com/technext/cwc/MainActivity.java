@@ -280,7 +280,7 @@ public class MainActivity extends MaterialNavigationDrawer implements
         MaterialSection selectionRegistration = newSection(getString(R.string.title_registration),RegistrationFragment.newInstance(2));
         this.addSection(sectionLogin);
         this.addSection(selectionRegistration.setSectionColor(getResources().getColor(R.color.colorPrimary)));
-        this.addSection(newSection("Advertisements", ProductDetailsFragment.newInstance(4)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        this.addSection(newSection("Advertisements", new ProductListFragment()).setSectionColor(getResources().getColor(R.color.colorPrimary)));
         this.addSection(newSection(getString(R.string.title_share),SocialNetworkChooserFragment.newInstance(3)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
 //        this.addSection(newSection("Product Details",ProductDetailsFragment.newInstance(4)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
 //        this.addSection(newSection("Create Ad", CreateAdFragment.newInstance(5)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
@@ -301,7 +301,7 @@ public class MainActivity extends MaterialNavigationDrawer implements
 		MaterialAccount account = new MaterialAccount(this.getResources(),"Klassify","klassify@gmail.com", R.drawable.photo2, R.drawable.profile_bg);
         this.addAccount(account);
 		this.addSection(sectionProfile);
-        this.addSection(newSection("Advertisements", ProductDetailsFragment.newInstance(4)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+		this.addSection(newSection("Advertisements", new ProductListFragment()).setSectionColor(getResources().getColor(R.color.colorPrimary)));
 //        this.addSection(newSection("Product Details",ProductDetailsFragment.newInstance(4)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
         this.addSection(newSection("Create Ad",new CreateAdFragment()).setSectionColor(getResources().getColor(R.color.colorPrimary)));
         this.addSection(newSection(getString(R.string.title_share),SocialNetworkChooserFragment.newInstance(3)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
@@ -331,7 +331,7 @@ public class MainActivity extends MaterialNavigationDrawer implements
 		MaterialSection selectionCreateAd = newSection("Create Ad",new CreateAdFragment());
         this.addAccount(account);
 		this.addSection(sectionProfile);
-        this.addSection(newSection("Advertisements", ProductDetailsFragment.newInstance(4)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+		this.addSection(newSection("Advertisements", new ProductListFragment()).setSectionColor(getResources().getColor(R.color.colorPrimary)));
 //        this.addSection(newSection("Product Details",ProductDetailsFragment.newInstance(4)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
         this.addSection(selectionCreateAd.setSectionColor(getResources().getColor(R.color.colorPrimary)));
         this.addSection(newSection(getString(R.string.title_share),SocialNetworkChooserFragment.newInstance(3)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
@@ -360,7 +360,7 @@ public class MainActivity extends MaterialNavigationDrawer implements
 //        sectionProfile = newSection(getString(R.string.title_profile), ProfileFragment.newInstance(0)).setSectionColor(getResources().getColor(R.color.colorPrimary));
     	this.addSection(sectionLogin);
         this.addSection(newSection(getString(R.string.title_registration),RegistrationFragment.newInstance(2)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
-        this.addSection(newSection("Advertisements", ProductDetailsFragment.newInstance(4)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        this.addSection(newSection("Advertisements", new ProductListFragment()).setSectionColor(getResources().getColor(R.color.colorPrimary)));
         this.addSection(newSection(getString(R.string.title_share),SocialNetworkChooserFragment.newInstance(3)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
         
 //        this.addSection(newSection("Create Ad",new CreateAdFragment()).setSectionColor(getResources().getColor(R.color.colorPrimary)));
