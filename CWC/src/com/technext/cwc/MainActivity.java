@@ -24,6 +24,7 @@ import com.github.gorbin.asne.core.SocialNetworkManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.technext.cwc.database.model.User;
 import com.technext.cwc.fragments.CreateAdFragment;
 import com.technext.cwc.fragments.LoginFragment;
 import com.technext.cwc.fragments.LoginFragment.LoginSuccessListener;
@@ -36,7 +37,7 @@ import com.technext.cwc.fragments.RegistrationFragment.RegistrationCompleteListe
 import com.technext.cwc.fragments.ShareContentFragment;
 import com.technext.cwc.fragments.SocialNetworkChooserFragment;
 import com.technext.cwc.http.Client;
-import com.technext.cwc.model.User;
+
 import com.utils.ImageFetcher.Callback;
 
 public class MainActivity extends MaterialNavigationDrawer implements

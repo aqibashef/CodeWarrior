@@ -70,7 +70,6 @@ public class Product extends Model {
 	public Location sub_location;
 	
 	@Expose
-	@Column(name = "images")
 	public List<ProductImage> images;
 
 	@Expose
@@ -87,6 +86,10 @@ public class Product extends Model {
 	
 	@Expose
 	public HashMap<String, String> settings;
+	
+	public List<ProductImage> getImages(){
+		return new Select().from(ProductImage.class).where("product_id=?", getId()).execute();
+	}
 	
 	public List<Settings> getSettings(){
 	
