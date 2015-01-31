@@ -160,7 +160,7 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 
 		editTextEmail = (EditText) rootView
 				.findViewById(R.id.editTextInfoEmail);
-		editTextPhoneNo = (EditText) rootView.findViewById(R.id.editTextMobileNo);
+		editTextPhoneNo = (EditText) rootView.findViewById(R.id.editTextPhoneNo);
 
 		editTextPassword = (EditText) rootView
 				.findViewById(R.id.editTextInfoPassword);
@@ -237,11 +237,28 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 	}
 
 	private void setValues() {
-		editTextFirstName.setText(Client.getUser().getFirstname());
-		editTextLastName.setText(Client.getUser().getLastname());
-		editTextEmail.setText(Client.getUser().getEmail());
-		labelHeadingName.setText(Client.getUser().getFirstname()+ " "+ Client.getUser().getLastname());
-		editTextPhoneNo.setText(Client.getUser().getMobile_no());
+		if(Client.getUser().getFirstname()!=null){
+			editTextFirstName.setText(Client.getUser().getFirstname());
+		}
+		if(Client.getUser().getLastname()!= null){
+			editTextLastName.setText(Client.getUser().getLastname());
+		}
+		if(Client.getUser().getEmail()!=null){
+			editTextEmail.setText(Client.getUser().getEmail());
+		}
+
+		String fullname = "";
+		if(Client.getUser().getFirstname() != null){
+			fullname+=Client.getUser().getFirstname();
+		}if(Client.getUser().getLastname()!= null){
+			fullname += " "+ Client.getUser().getLastname();
+		}
+		
+		labelHeadingName.setText(fullname);
+		if(Client.getUser().getMobile_no()!= null){
+			editTextPhoneNo.setText(Client.getUser().getMobile_no());
+		}
+		
 	}
 
 	@Override
