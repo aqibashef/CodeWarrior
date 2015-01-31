@@ -5,8 +5,11 @@ import java.util.Map;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.activeandroid.query.Delete;
+import com.activeandroid.query.Select;
 import com.android.volley.Request.Method;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -15,8 +18,10 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.technext.cwc.app.AppController;
+import com.technext.cwc.database.model.User;
 import com.technext.cwc.listener.VolleyResponseHandler;
-import com.technext.cwc.model.User;
+
+
 import com.technext.cwc.utils.URLUtils;
 
 public class Client {
@@ -110,8 +115,9 @@ public class Client {
 	public static boolean isValidSession(Context context) {
 		SharedPreferences pref = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		String userString = pref.getString("user", null);
-		if (userString != null && !userString.equalsIgnoreCase("")) {
+		long user_id = pref.getLong("user_id", 0);
+		String session_token = pref.getString("session_token", null);
+		if (user_id != 0 && session_token != null ) {
 			return true;
 		}
 
@@ -139,8 +145,22 @@ public class Client {
 		 * editor.putString("profile_pic_extension",
 		 * user.getProfile_pic_extension()); }
 		 */
+		
+		
 
-		editor.putString("user", gson.toJson(user));
+		if(user.getServer_id() != null){
+			editor.putLong("user_id", user.getServer_id());
+			editor.putString("session_token", user.getSession_token());
+		}
+		if(user != null){
+			if(new Select()
+	        .from(User.class)
+	        .executeSingle() == null){
+				Log.e("user", "null");
+				user.save();
+			}
+			
+		}	
 
 		editor.commit();
 	}
@@ -149,23 +169,35 @@ public class Client {
 		SharedPreferences pref = PreferenceManager
 				.getDefaultSharedPreferences(context);
 		SharedPreferences.Editor editor = pref.edit();
-		editor.remove("user");
+		editor.remove("user_id");
+		editor.remove("session_token");
+		new Delete().from(User.class).execute();
 		editor.commit();
 	}
 
 	public static User getUserFromSession(Context context) {
-
 		if (user != null) {
 			return user;
 		} else {
+			
 			SharedPreferences pref = PreferenceManager
 					.getDefaultSharedPreferences(context);
-			String userString = pref.getString("user", null);
-			if (userString != null && !userString.equalsIgnoreCase("")) {
-				user = gson.fromJson(userString, User.class);
+			//long user_id = pref.getLong("user_id", 0);
+			String session_token= pref.getString("session_token", null);
+			//if(session_token != null){
+				user =  new Select()
+		        .from(User.class)
+		        .executeSingle();
+				
+			//}
+			
+			if(user != null){
+				Log.e("user not null", "null");
 				return user;
 			}
 			return null;
+			
+			
 		}
 	}
 

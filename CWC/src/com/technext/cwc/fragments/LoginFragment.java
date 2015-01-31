@@ -34,14 +34,14 @@ import com.loopj.android.http.RequestParams;
 import com.technext.cwc.MainActivity;
 import com.technext.cwc.R;
 import com.technext.cwc.app.AppController;
-import com.technext.cwc.database.datasource.ProductDataSource;
+import com.technext.cwc.database.model.User;
 import com.technext.cwc.dialog.SplashProgressDialog;
 import com.technext.cwc.fragments.RegistrationFragment.RegistrationCompleteListener;
 import com.technext.cwc.http.Client;
 import com.technext.cwc.http.GsonRequest;
 import com.technext.cwc.listener.VolleyResponseHandler;
 import com.technext.cwc.model.Product;
-import com.technext.cwc.model.User;
+
 import com.technext.cwc.utils.CommonUtils;
 import com.technext.cwc.utils.URLUtils;
 
@@ -80,20 +80,7 @@ public class LoginFragment extends Fragment implements OnClickListener {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
-		ProductDataSource productSource = new ProductDataSource(getActivity());
-		productSource.open();
-		/*Product product = productSource.createProduct("My new Product", "Test product description", "test category", "Test type", "Test Location");
-		Log.e("Product create", product.getTitle());*/
-		List<Product> products = productSource.getAllProducts();
-		Log.e("products start","start");
-		Iterator<Product> iter = products.iterator();
-		while(iter.hasNext()){
-			Product product = iter.next();
-			Log.e("product title--> ", "--> "+product.getTitle());
-			Log.e("product id--> ", "--> "+product.getId());
-		}
-		Log.e("products end","end");
-		productSource.close();
+	
 	}
 
 	@Override
@@ -179,10 +166,10 @@ public class LoginFragment extends Fragment implements OnClickListener {
 								progress.dismiss();
 								Toast.makeText(getActivity(), "Login success",
 										Toast.LENGTH_SHORT).show();
-
+								Log.e("useremail", user.email);
 								Client.setUser(user);
 								Client.saveSession(getActivity(), user);
-								Log.e("User email", user.getEmail());
+								Log.e("User email", ""+user.getEmail());
 								Toast.makeText(getActivity(),
 										"User email--> " + user.getEmail(),
 										Toast.LENGTH_LONG).show();

@@ -10,8 +10,9 @@ public class URLUtils {
 	
 		private static final String URL_BASE = "http://www.mocky.io/v2/";
 		// authentication
-		public static final String URL_LOGIN = "54c7b5291f6a712d121514cc";
-		public static final String URL_REGISTER = "54cbb56c96d6b2c611431f8b";
+		//http://www.mocky.io/v2/54cbd72096d6b27d14431fa4
+		public static final String URL_LOGIN = "54cbd72096d6b27d14431fa4";
+		public static final String URL_REGISTER = "54cbd72096d6b27d14431fa4";
 
 		// authenticated
 		public static final String URL_PROFILE_EDIT = "54c7b5291f6a712d121514cc";

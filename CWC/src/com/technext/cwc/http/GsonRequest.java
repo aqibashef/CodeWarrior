@@ -65,14 +65,21 @@ public class GsonRequest<T> extends Request<T> {
 	protected Response<T> parseNetworkResponse(NetworkResponse response) {
 		try {
 			Log.e("response--> ", "--> klk");
+			
 			String json = new String(response.data,
 					HttpHeaderParser.parseCharset(response.headers));
+			Log.e("user --> ", json);
 			return Response.success(gson.fromJson(json, clazz),
 					HttpHeaderParser.parseCacheHeaders(response));
 		} catch (UnsupportedEncodingException e) {
+			Log.e("sfs in UnsupportedEncodingException ", "--> "+e.getMessage());
 			return Response.error(new ParseError(e));
 		} catch (JsonSyntaxException e) {
+			Log.e("sfs in voleyJsonSyntaxException ", "--> "+e.getMessage());
 			return Response.error(new ParseError(e));
+		}catch(Exception e){
+			Log.e("sfs in voley ", "--> "+e.getMessage());
+			return Response.error(new VolleyError(e.getMessage()));
 		}
 	}
 

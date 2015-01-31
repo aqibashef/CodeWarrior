@@ -5,6 +5,7 @@ import java.util.List;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 import com.google.gson.annotations.Expose;
 
 @Table(name = "locations")
@@ -18,7 +19,13 @@ public class Location extends Model {
 	public List<SubLocation> sub_locations;
  	
  	public List<SubLocation> getSublocations(){
- 		return getMany(SubLocation.class, "Location");
+ 		
+ 		    return new Select()
+ 		        .from(SubLocation.class)
+ 		        .where("location_id = ?", getId())
+ 		      /*  .orderBy("Name ASC")*/
+ 		        .execute();
+
  	}
  	
 }

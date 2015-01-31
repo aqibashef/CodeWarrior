@@ -20,9 +20,10 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.technext.cwc.MainActivity;
 import com.technext.cwc.R;
+import com.technext.cwc.database.model.User;
 import com.technext.cwc.dialog.SplashProgressDialog;
 import com.technext.cwc.http.Client;
-import com.technext.cwc.model.User;
+
 import com.technext.cwc.utils.CommonUtils;
 import com.technext.cwc.utils.URLUtils;
 
@@ -159,19 +160,19 @@ public class RegistrationFragment extends Fragment implements OnClickListener{
 		
 		public void onSuccess(String response) {
 			
-			Toast.makeText(getActivity(), "Registration success", Toast.LENGTH_SHORT);
+			//Toast.makeText(getActivity(), "Registration success", Toast.LENGTH_SHORT);
 			Gson gson = new Gson();
 			User user = gson.fromJson(response, User.class);
 			Client.setUser(user);
 			Client.saveSession(getActivity(), user);
-			Log.e("User email", user.getEmail());
-			Toast.makeText(getActivity(), "User email--> "+ user.getEmail(), Toast.LENGTH_LONG).show();
+			Log.e("User email", "-->"+user.getEmail());
+			//Toast.makeText(getActivity(), "User email--> "+ user.getEmail(), Toast.LENGTH_LONG).show();
 			registrationCompleteListener.onRegistrationComplete(user);
 		};
 		
 		public void onFailure(Throwable arg0, String response) {
 			//Toast.makeText(getActivity(), text, duration)
-			Log.e("onfailure response", response);
+			Log.e("onfailure response", "-->"+response);
 			Toast.makeText(getActivity(), "Registration Failed", Toast.LENGTH_SHORT).show();
 		};
 		

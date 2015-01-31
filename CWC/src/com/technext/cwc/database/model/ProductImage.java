@@ -1,20 +1,19 @@
 package com.technext.cwc.database.model;
 
-import java.util.List;
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.google.gson.annotations.Expose;
 
-@Table(name = "sub_categories")
-public class SubCategory extends Model{
+@Table(name = "product_images")
+public class ProductImage extends Model{
 
 	@Expose
-	@Column(name = "name")
-	public String name;
+ 	@Column(name = "local_url")
+	private String local_url;
 	
 	@Expose
-	@Column(name = "category_id")
-	public Long category_id;
+ 	@Column(name = "server_url")
+	private String server_url;
+
 }

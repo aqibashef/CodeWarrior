@@ -5,6 +5,7 @@ import java.util.List;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 import com.google.gson.annotations.Expose;
 
 
@@ -24,6 +25,10 @@ public class Category extends Model{
 	public List<SubCategory> sub_categories;
 	
 	public List<SubCategory> getSubCategories(){
-      return getMany(SubCategory.class, "Category");		    
-	}
+		  return new Select()
+	        .from(SubCategory.class)
+	        .where("category_id = ?", getId())
+	      /*  .orderBy("Name ASC")*/
+	        .execute();
+	}	    
 }

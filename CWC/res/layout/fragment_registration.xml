@@ -123,7 +123,7 @@
             android:background="@color/colorPrimary"
             android:text="@string/textRegButton"
             android:textSize="18sp"
-            android:layout_below="@+id/editTextConfirmPasswordReg"
+            android:layout_below="@+id/editTextMobileNo"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true" />
         

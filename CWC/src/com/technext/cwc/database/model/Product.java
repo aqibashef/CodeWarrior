@@ -8,10 +8,7 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 import com.google.gson.annotations.Expose;
-import com.technext.cwc.model.Category;
-import com.technext.cwc.model.Location;
-import com.technext.cwc.model.ProductImage;
-import com.technext.cwc.model.User;
+
 
 @Table(name = "products")
 public class Product extends Model {
@@ -89,7 +86,7 @@ public class Product extends Model {
 	public String updated_at;
 	
 	@Expose
-	public List<Settings> settings;
+	public HashMap<String, String> settings;
 	
 	public List<Settings> getSettings(){
 	

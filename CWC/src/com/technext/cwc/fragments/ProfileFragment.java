@@ -40,10 +40,12 @@ import com.squareup.picasso.Picasso.LoadedFrom;
 import com.squareup.picasso.Target;
 import com.technext.cwc.MainActivity;
 import com.technext.cwc.R;
+
+import com.technext.cwc.database.model.User;
 import com.technext.cwc.dialog.SplashProgressDialog;
 import com.technext.cwc.http.Client;
 import com.technext.cwc.model.ErrorResponse;
-import com.technext.cwc.model.User;
+
 import com.technext.cwc.utils.URLUtils;
 
 @SuppressLint("NewApi")
@@ -284,8 +286,7 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 				RequestParams params = new RequestParams();
 				params.put(URLUtils.PARAM_USER_ID, Client.getUser().getId()
 						.toString());
-				params.put(URLUtils.PARAM_SESSION_TOKEN, Client.getUser()
-						.getSession_token());
+				params.put(URLUtils.PARAM_SESSION_TOKEN, Client.getUser().getSession_token());
 				params.put(URLUtils.PARAM_FIRSTNAME, firstname);
 				params.put(URLUtils.PARAM_LASTNAME, lastname);
 				if (password != null && newPassword != null) {
