@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 
 /***
@@ -39,14 +38,14 @@ import android.util.Log;
 
 public class TCameraAccessManager {
 	
-	private Fragment context;
+	private Activity context;
 	public static final int IMAGE_CAPTURE_REQUEST_CODE = 123;
 	private Uri imageFileUri;
 	private static String imagePath;
 	private static File imageFile;
 	
 	
-	public TCameraAccessManager(Fragment context){
+	public TCameraAccessManager(Activity context){
 		this.context = context;
 		imageFileUri = getOutputMediaFileUri();
 	}
@@ -105,4 +104,3 @@ public class TCameraAccessManager {
 		context.startActivityForResult(cameraIntent, IMAGE_CAPTURE_REQUEST_CODE);
 	}
 }
-
