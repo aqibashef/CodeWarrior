@@ -190,9 +190,6 @@ public class MainActivity extends MaterialNavigationDrawer implements
 
 	@Override
 	public void onRegistrationComplete(User user) {
-		//Toast.makeText(getApplicationContext(), "In Activity email--> "+user.getEmail(), Toast.LENGTH_SHORT).show();
-//		mNavigationDrawerFragment.changeDataset(drawerItems_login);
-//		redirect(1);
 		afterLogin(false);
 	}
 	
@@ -202,6 +199,11 @@ public class MainActivity extends MaterialNavigationDrawer implements
 	      Fragment fragment = getSupportFragmentManager().findFragmentByTag(SOCIAL_NETWORK_TAG);
 	      if (fragment != null) {
 	          fragment.onActivityResult(requestCode, resultCode, data);
+	      }else{
+	    	  Object object = this.getCurrentSection().getTargetFragment();
+	    	  if(object != null && object instanceof Fragment && object instanceof CreateAdFragment){
+	    		  ((CreateAdFragment)object).onActivityResult(requestCode, resultCode, data);
+	    	  }
 	      }
 	  }
 
@@ -270,8 +272,22 @@ public class MainActivity extends MaterialNavigationDrawer implements
 
 	@Override
 	public void onRegisterClicked() {
-//		redirect(2);
+		this.clearSectionsView();
+		this.initLists();
 		
+		sectionLogin= newSection(getString(R.string.title_login), LoginFragment.newInstance(1)).setSectionColor(getResources().getColor(R.color.colorPrimary));
+        sectionProfile = newSection(getString(R.string.title_profile), ProfileFragment.newInstance(0)).setSectionColor(getResources().getColor(R.color.colorPrimary));
+        MaterialSection selectionRegistration = newSection(getString(R.string.title_registration),RegistrationFragment.newInstance(2));
+        this.addSection(sectionLogin);
+        this.addSection(selectionRegistration.setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        this.addSection(newSection(getString(R.string.title_share),SocialNetworkChooserFragment.newInstance(3)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        this.addSection(newSection("Product Details",ProductDetailsFragment.newInstance(4)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+        this.addSection(newSection("Create Ad", CreateAdFragment.newInstance(5)).setSectionColor(getResources().getColor(R.color.colorPrimary)));
+       
+        this.setCurrentSection(selectionRegistration);
+        this.onClickCustom(selectionRegistration);
+        selectionRegistration.select();
+        this.setSectionsTouch(true);
 	}
 	
 	public void afterLogin(boolean isOnCreate){

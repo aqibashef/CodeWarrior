@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    android:weightSum="19">
+    
+    <include android:id="@+id/toolbar_main" layout="@layout/toolbar" />
+    
+	<ScrollView
+	    android:layout_weight="17"
+	    android:layout_width="match_parent"
+	    android:layout_height="0dp"
+	    android:layout_marginLeft="10dp"
+	    android:layout_marginRight="10dp"
+	    android:layout_marginTop="10dp">
+	    
+		<LinearLayout
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="vertical" >
+		    
+		    <EditText
+		        android:id="@+id/description_title" 
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:hint="type product title..."/>
+		    
+		    <EditText
+		        android:id="@+id/description_desc" 
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:hint="type product description..."/>
+		    
+		    <EditText
+		        android:id="@+id/description_price" 
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:inputType="number"
+		        android:hint="enter your price..."/>
+		    
+		    <RadioGroup
+		        android:id="@+id/radioPriceType"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content" >
+	 
+		        <RadioButton
+		            android:id="@+id/negotiable"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="Negotiable" 
+		            android:checked="true" />
+		 
+		        <RadioButton
+		            android:id="@+id/fixed"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="Fixed" />
+		 
+		    </RadioGroup>
+		    
+		    <EditText
+		        android:id="@+id/description_dyn_1" 
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:hint="type here..."/>
+		    
+		    <EditText
+		        android:id="@+id/description_dyn_2" 
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:hint="type here..."/>
+		    
+		    <EditText
+		        android:id="@+id/description_dyn_3" 
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:hint="type here..."/>
+		    
+		    <EditText
+		        android:id="@+id/description_dyn_4" 
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:hint="type here..."/>
+		
+		</LinearLayout>
+	</ScrollView>
+	
+	<com.gc.materialdesign.views.LayoutRipple
+        android:id="@+id/desc_detail_submint"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/fav_gray"
+        android:clickable="true"
+        materialdesign:rippleSpeed="40.0"
+        android:layout_weight="2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="18sp"
+            android:text="Done" />
+           
+       </com.gc.materialdesign.views.LayoutRipple>
+</LinearLayout>

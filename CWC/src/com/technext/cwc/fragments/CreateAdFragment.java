@@ -2,6 +2,7 @@ package com.technext.cwc.fragments;
 
 import com.gc.materialdesign.views.LayoutRipple;
 import com.technext.cwc.CategoryActivity;
+import com.technext.cwc.DescriptionDetailsActivity;
 import com.technext.cwc.MainActivity;
 import com.technext.cwc.R;
 import com.technext.cwc.SubCategoryActivity;
@@ -24,6 +25,23 @@ import android.widget.Toast;
 public class CreateAdFragment extends Fragment implements OnClickListener {
 	private LayoutRipple layoutRipple_choose_category, layoutRipple_description, layoutRipple_your_info;
 	private TextView textView_choose_category, textView_description, textView_your_info;
+	
+	private final static String ARG_SECTION_NUMBER = "section_number";
+	
+	public CreateAdFragment() {
+
+	}
+
+	/**
+	 * Returns a new instance of this fragment for the given section number.
+	 */
+	public static CreateAdFragment newInstance(int sectionNumber) {
+		CreateAdFragment fragment = new CreateAdFragment();
+		Bundle args = new Bundle();
+		args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+		fragment.setArguments(args);
+		return fragment;
+	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,7 +96,7 @@ public class CreateAdFragment extends Fragment implements OnClickListener {
 			getActivity().startActivityForResult(intent, 123);
 			break;
 		case R.id.writeDescription:
-			intent = new Intent(getActivity(), CategoryActivity.class);
+			intent = new Intent(getActivity(), DescriptionDetailsActivity.class);
 			getActivity().startActivity(intent);
 			break;
 		case R.id.yourInfo:

@@ -26,6 +26,8 @@
     
     <color name="grey_light">#FFCCCCCC</color>
     <color name="dark">#4b4b4b</color>
+    
+    <color name="fav_gray">#88CECECE</color>
 
     <color name="facebook">#3b5998</color>
     <color name="twitter">#55ACEE</color>
