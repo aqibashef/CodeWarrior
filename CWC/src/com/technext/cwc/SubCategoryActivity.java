@@ -29,7 +29,7 @@ public class SubCategoryActivity extends ActionBarActivity {
 		category = intent.getStringExtra(CategoryActivity.CATEGORY_KEY);
 		
 		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-		toolbar.setTitle("Category");
+		toolbar.setTitle("Sub-Category");
 		setSupportActionBar(toolbar);
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
