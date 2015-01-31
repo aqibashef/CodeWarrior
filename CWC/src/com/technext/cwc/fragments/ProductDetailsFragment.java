@@ -85,6 +85,7 @@ public class ProductDetailsFragment extends Fragment implements OnClickListener 
 		product_details_email.setOnClickListener(this);
 		product_details_sms =  (LayoutRipple) rootView.findViewById(R.id.product_details_sms);
 		product_details_sms.setOnClickListener(this);
+		product_details_call.setOnClickListener(this);
 		
 		HashMap<String,String> urlParams = new HashMap<String, String>();
 		
