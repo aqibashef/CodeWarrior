@@ -15,5 +15,8 @@ public class ProductImage extends Model{
 	@Expose
  	@Column(name = "server_url")
 	private String server_url;
+	
+ 	@Column(name = "product_id")
+	private Long product_id;
 
 }
