@@ -116,12 +116,32 @@
                 android:paddingLeft="10dp"
                 android:textColor="#797979"
                 android:textSize="12sp" />
+            
+            <TextView
+                android:id="@+id/labelPhoneNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editTextInfoEmail"
+                android:text="Phone No" />
+
+            <EditText
+                android:id="@+id/editTextPhoneNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/labelPhoneNo"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="10dp"
+                android:textColor="#797979"
+                android:textSize="12sp" 
+                 />
+            
+            
 
             <TextView
                 android:id="@+id/labelPassword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/editTextInfoEmail"
+                android:layout_below="@+id/editTextPhoneNo"
                 android:text="@string/textPassword" />
 
             <EditText
@@ -176,29 +196,9 @@
             android:layout_marginRight="5dp"
             android:background="@drawable/save_button_bg" 
             android:visibility="gone"/>
+        
          
-          <android.support.v7.widget.CardView
-            android:id="@+id/cardview"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:elevation="100dp"
-            card_view:cardBackgroundColor="#FFFFFF"
-            card_view:cardCornerRadius="0dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:clickable="true"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:layout_below="@+id/relativeLayoutProfileInfo"
-            >
- 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="this is card view. this contain string lorem ipsum this is card view. this card view this is card view this card view ths is card view"
-                />
-        </android.support.v7.widget.CardView>
-         
+                 
     </RelativeLayout>
       
 

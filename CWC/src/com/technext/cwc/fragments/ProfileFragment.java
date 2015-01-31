@@ -68,6 +68,7 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 	private TextView labelPassword;
 	private TextView labelNewPassword;
 	private TextView labelHeadingName;
+	private TextView labelPhoneNo;
 	
 
 	private EditText editTextFirstName;
@@ -75,6 +76,7 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 	private EditText editTextEmail;
 	private EditText editTextPassword;
 	private EditText editTextNewPassword;
+	private EditText editTextPhoneNo;
 	private int profileImageSize;
 
 	private SplashProgressDialog progress;
@@ -147,6 +149,7 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 		labelNewPassword = (TextView) rootView
 				.findViewById(R.id.labelNewPassword);
 		labelHeadingName = (TextView) rootView.findViewById(R.id.labelHeadingName);
+		labelPhoneNo  = (TextView) rootView.findViewById(R.id.labelPhoneNo);
 		// edit text
 
 		editTextFirstName = (EditText) rootView
@@ -157,6 +160,7 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 
 		editTextEmail = (EditText) rootView
 				.findViewById(R.id.editTextInfoEmail);
+		editTextPhoneNo = (EditText) rootView.findViewById(R.id.editTextMobileNo);
 
 		editTextPassword = (EditText) rootView
 				.findViewById(R.id.editTextInfoPassword);
@@ -203,6 +207,7 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 	private void setEnabledFields() {
 		editTextFirstName.setEnabled(true);
 		editTextLastName.setEnabled(true);
+		editTextPhoneNo.setEnabled(true);
 
 		editTextPassword.setEnabled(true);
 		editTextNewPassword.setEnabled(true);
@@ -218,6 +223,7 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 	private void setDisabledFields() {
 		editTextFirstName.setEnabled(false);
 		editTextLastName.setEnabled(false);
+		editTextPhoneNo.setEnabled(false);
 		editTextPassword.setEnabled(false);
 		editTextNewPassword.setEnabled(false);
 		editTextEmail.setEnabled(false);
@@ -235,7 +241,7 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 		editTextLastName.setText(Client.getUser().getLastname());
 		editTextEmail.setText(Client.getUser().getEmail());
 		labelHeadingName.setText(Client.getUser().getFirstname()+ " "+ Client.getUser().getLastname());
-		
+		editTextPhoneNo.setText(Client.getUser().getMobile_no());
 	}
 
 	@Override
@@ -270,6 +276,7 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 
 			String password = editTextPassword.getText().toString();
 			String newPassword = editTextNewPassword.getText().toString();
+			String phoneNo = editTextPhoneNo.getText().toString();
 
 			if (firstname == null || firstname.equalsIgnoreCase("")) {
 				Toast.makeText(getActivity(), "Firstname Required",
@@ -277,7 +284,11 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 			} else if (lastname == null || lastname.equalsIgnoreCase("")) {
 				Toast.makeText(getActivity(), "Lastname Required",
 						Toast.LENGTH_LONG).show();
-			} else if ((newPassword != null && !newPassword
+			}else if(phoneNo == null || phoneNo.equalsIgnoreCase("")){
+				Toast.makeText(getActivity(), "Phone No Required",
+						Toast.LENGTH_LONG).show();
+			}
+			else if ((newPassword != null && !newPassword
 					.equalsIgnoreCase(""))
 					&& (password == null || password.equals(""))) {
 				Toast.makeText(getActivity(), "Please Enter Current Password",
@@ -289,6 +300,7 @@ public class ProfileFragment extends Fragment implements OnClickListener {
 				params.put(URLUtils.PARAM_SESSION_TOKEN, Client.getUser().getSession_token());
 				params.put(URLUtils.PARAM_FIRSTNAME, firstname);
 				params.put(URLUtils.PARAM_LASTNAME, lastname);
+				params.put(URLUtils.PARAM_MOBILE_NO, phoneNo);
 				if (password != null && newPassword != null) {
 					params.put(URLUtils.PARAM_PASSWORD, password);
 					params.put(URLUtils.PARAM_NEW_PASSWORD, newPassword);
